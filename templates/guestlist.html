@@ -1,0 +1,121 @@
+{% extends "admin_layout.html" %}
+
+{% block main %}
+    <div class="container section-block section-padding">
+        <div class="col-lg-8 col-12 mx-auto">
+            <h2 class="section-title-wrap">Add New Guest</h2>
+            <form style="text-align: center;" method="POST" action="/guestlist">
+                <input type="text" name="title" placeholder="Title (Mr./Ms./etc)" required class="edit-textbox">
+                <input type="text" name="name" placeholder="Name" required class="edit-textbox"> 
+                <input type="text" name="category" placeholder="Category" required class="edit-textbox"> 
+                <input type="text" name="email" placeholder="Email" class="edit-textbox"> 
+                <input type="text" name="phone number" placeholder="Phone Number" class="edit-textbox">
+                Party Size:<select name="party size" class="form-select-sm" style="padding-top: 10px; padding-bottom: 10px;" required>
+                    <option selected value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+                Responded to RSVP?<select name="response" class="form-select-sm" style="padding-top: 10px; padding-bottom: 10px; margin-left: 5px; margin-right: 10px" required>
+                    <option selected value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+                RSVP:<select name="rsvp" class="form-select-sm" style="padding-top: 10px; padding-bottom: 10px;">
+                    <option selected value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+                21+:<select name="over 21" class="form-select-sm" style="padding-top: 10px; padding-bottom: 10px;">
+                    <option selected value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+                <div class="justify-content-center">
+                    <p style="margin-bottom: 0rem;">Events Invited: </p>
+                    Haldi<input type="checkbox" value="Haldi" name="events" style="margin-right: 1rem;">
+                    Mendhi<input type="checkbox" value="Mendhi" name="events" style="margin-right: 1rem;">
+                    Wedding<input type="checkbox" value="Wedding" name="events" style="margin-right: 1rem;">
+                    Reception<input type="checkbox" value="Reception" name="events" style="margin-right: 1rem;">
+                </div> 
+                <div style="padding-top: 0.5rem">
+                    <input type="submit" value="Add New Guest" class="btn custom-btn" style="text-align: center;">
+                </div>
+            </form>
+        </div>
+        <div style="padding-top: 30px; margin-left: 0rem; margin-right: 0rem">
+            <h2 class="section-title">Guest List</h2>
+            <h6 style="display: inline-block">Haldi Attendance: {{haldi_count}}</h6>
+            <h6 style="display: inline-block; margin-left: 50px">Mendhi Attendance: {{mendhi_count}}</h6>
+            <h6 style="display: inline-block; margin-left: 50px">Wedding Attendance: {{wedding_count}}</h6>
+            <h6 style="display: inline-block; margin-left: 50px">Reception Attendance: {{reception_count}}</h6>
+            <table class="table table-hover table-striped" id="sortTable" style="text-align: center;">
+                <thead>
+                    <tr style="font-size: small;">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Party Size</th>
+                        <th>Responded</th>
+                        <th data-orderable="false">Email</th>
+                        <th data-orderable="false">Phone Number</th>
+                        <th data-orderable="false">Events Invited</th>
+                        <th data-orderable="false">Haldi</th>
+                        <th data-orderable="false">Mendhi</th>
+                        <th data-orderable="false">Wedding</th>
+                        <th data-orderable="false">Reception</th>
+                        <th data-orderable="false">Guest Names</th>
+                        <th data-orderable="false">Edit</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: small; vertical-align: middle;">
+                    {% for person in guestlist %} 
+                        <tr>
+                            <td>{{person.id}}</td>
+                            <td>{{person.name}}</td>
+                            <td>{{person.party_size}}</td>
+                            <td>{{person.responded_rsvp}}</td>
+                            <td>{{person.email}}</td>
+                            <td>{{person.phone_number}}</td>
+                            <td>{{person.events_invited}}</td>
+                            <td>{{person.Haldi}}</td>
+                            <td>{{person.Mendhi}}</td>
+                            <td>{{person.Wedding}}</td>
+                            <td>{{person.Reception}}</td>
+                            <td>{{person.guest_names}}</td>
+                            <td>
+                                <a href="/editguest/{{person.id}}" class="btn custom-btn" style="font-size: 16px; padding:5px">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %} 
+                </tbody>
+            </table>
+        </div>
+        <script>
+            $('#sortTable').DataTable({
+                paging: false,
+                info: false,
+            });
+        </script>
+    </div>
+{% endblock %}

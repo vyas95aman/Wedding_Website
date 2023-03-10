@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&display=swap');
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
+
+@import url('https://fonts.googleapis.com/css2?family=Metal&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap');
+
+:root{
+    --white-color: #ffffff;
+    --primary-color: #bd8677;
+    --secondary-color: #146C7D;
+    --section-bg-color: #f9f9f9 ;
+    --custom-btn-bg-color: var(--primary-color);
+    --dark-color: #000000;
+    --p-color: #717275;
+    --border-color: #e9eaeb;
+
+    --body-font-family: 'Source Sans Pro' , sans-esrif ;
+    --title-font-family: 'Metal';
+
+    --h1-font-size: 72px ;
+    --h2-font-size: 55px ;
+    --h3-font-size: 36px ;
+    --h4-font-size: 32px ;
+    --h5-font-size: 24px ;
+    --h6-font-size: 22px ;
+    --p-font-size: 20px ;
+    --menu-font-size: 14px ;
+    --copyright-font-size: 16px ;
+    
+    --border-radius-large: 100px ;
+    --border-radius-medium: 20px ;
+    --border-radius-small: 10px ;
+
+    --font-weight-light: 300 ;
+    --font-weight-normal: 400 ;
+    --font-weight-medium: 500 ;
+    --font-weight-bold: 700 ;
+}
+
+body{
+    background: var(--white-color);
+    font-family: var(--body-font-family);
+}
+
+h2,h3,h4,h5,h6{
+    color: var(--dark-color);
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: var(--title-font-family);
+    font-weight: var(--font-weight-bold);
+}
+h1{
+    font-size: 72px;
+}
+h2{
+    font-size: 48px;
+    color: var(--secondary-color);
+}
+h3{
+    font-size: 36px;
+}
+h4{
+    font-size: 32px;
+}
+h5{
+    font-size: 20px;
+    line-height: normal;
+}
+h6{
+    font-size: 16px;
+}
+p{
+    color: var(--p-color);
+    font-size: 20px;
+    font-weight: var(--font-weight-light);
+    font-family: 'Metal';
+}
+
+.title{
+    font-family: 'Monsieur La Doulaise'; 
+    font-size: 60px; 
+    font-weight: 700; 
+    color: #bd8677
+}
+
+.section-bg{
+    background: var(--section-bg-color);
+}
+
+.section-padding {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    scroll-margin-top: 2rem
+}
+
+.section-title{
+    font-family: 'Fleur De Leah';
+}
+
+.section-title-wrap{
+    text-align: center;
+}
+
+.section-title-line{
+    background: var(--border-color);
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+    height: 2px;
+    margin: 0 auto;
+}
+
+
+.section-title-icon{
+    font-size: var(--h5-font-size);
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 20px;
+    color: var(--primary-color);
+}
+
+.image-hover-thumb{
+    border-radius: var(--border-radius-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+.image-hover-thumb:hover .img-fluid{
+    transform: scale(1.05);
+}
+
+.image-hover-thumb .img-fluid {
+    transition: all 0.5s;
+}
+
+.custom-btn{
+    background: var(--custom-btn-bg-color);
+    border: 0;
+    color: var(--white-color);
+    font-family: var(--title-font-family);
+    font-size: var(--p-font-size);
+    font-weight: var(--font-weight-bold);
+}
+
+/* Buttons on turn transparent when hovering */
+.btn:hover {
+    background: var(--custom-btn-bg-color);
+    }
+
+.custom-logo{
+    font-family: 'Monsieur La Doulaise', cursive;
+    font-size: 55px;
+    color: #CE9C9D;
+}
+
+.edit-textbox{
+    padding-top: 5px; 
+    padding-bottom: 5px; 
+    margin: 2px
+}
+
+/* Navbar */
+
+
+.navbar{
+    position: absolute;
+    z-index: 9;
+    right: 0;
+    left: 0;
+}
+
+.is-sticky .navbar{
+    background: var(--white-color);
+}
+
+.navbar-expand-lg .navbar-nav .nav-link{
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.navbar-nav .nav-link{
+    display: inline-block;
+    color: var(--p-color);
+    font-size: var(--menu-font-size);
+    text-transform: uppercase;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+/* Home */
+
+.home-container{
+    background-image: url('images/Pic-162.jpg');
+    background-size: cover;
+    border-radius: var(--border-radius-small);
+    position: relative;
+    background-position: center center;
+    overflow: hidden;
+    height: calc(90vh - 90px);
+    background-position-y: 25%;
+}
+
+.btn-opacity{
+    opacity: 1.0;
+}
+
+.btn-opacity:hover{
+    opacity: 1.0;
+}
+
+/* About */
+
+/* The Wedding */
+
+.google-map{
+    border-radius: var(--border-radius-medium);
+    display: block;
+    line-height: normal;
+}
+
+/* Gallery */
+
+.gallery-thumb,
+.people-thumb{
+    margin-bottom: 20px;
+}
+
+.gallery-thumb-small{
+    height: 100%;
+}
+
+.gallery-thumb-small .gallery-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* RSVP */
+
+.rsvp-section{
+    background-image: url('images/Pic-140.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.rsvp-form-wrap{
+    background: var(--white-color);
+    border-radius: var(--border-radius-medium);
+    padding: 50px;
+}
+
+.custom-form .form-control{
+    margin-bottom: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.event-wrap{
+    border-right: 1px solid;
+    display:table-cell; 
+    vertical-align: middle; 
+    text-align: center; 
+    width: 50%; 
+    padding-right: 20px;
+}
+
+.rsvp-user-wrap{
+    display:table-cell; 
+    vertical-align: middle; 
+    width: 50%; 
+    padding-left: 20px;
+}

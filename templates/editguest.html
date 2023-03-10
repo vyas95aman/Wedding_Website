@@ -1,0 +1,93 @@
+{% extends "admin_layout.html" %}
+
+{% block main%}
+    <div class="container section-block">
+        <div class="col-lg-8 col-12 mx-auto" style="padding-top: 5rem;">
+            <h2 class="section-title-wrap">Edit Guest</h2>
+            {% for data in person %}
+            <form style="text-align: center;" method="POST" action="/editguest/{{data.id}}">
+                <input type="text" name="title" placeholder="Mr./Ms./etc." required class="edit-textbox" value="{{data.title}}">
+                <input type="text" name="name" placeholder="Name" required class="edit-textbox" value="{{data.name}}"> 
+                <input type="text" name="category" placeholder="Category" required class="edit-textbox" value="{{data.category}}"> 
+                <input type="email" name="email" placeholder="Email" class="edit-textbox" value="{{data.email}}"> 
+                <input type="text" name="phone number" placeholder="Phone Number" class="edit-textbox" value="{{data.phone_number}}">
+                Party Size:<select name="party size" class="form-select-sm" style="padding-top: 10px; padding-bottom: 10px;">
+                    <option value="0">0</option>
+                    <option value="1" {% if data.party_size == 1 %} selected {% endif %}>1</option>
+                    <option value="2" {% if data.party_size == 2 %} selected {% endif %}>2</option>
+                    <option value="3" {% if data.party_size == 3 %} selected {% endif %}>3</option>
+                    <option value="4" {% if data.party_size == 4 %} selected {% endif %}>4</option>
+                    <option value="5" {% if data.party_size == 5 %} selected {% endif %}>5</option>
+                    <option value="6" {% if data.party_size == 6 %} selected {% endif %}>6</option>
+                    <option value="7" {% if data.party_size == 7 %} selected {% endif %}>7</option>
+                    <option value="8" {% if data.party_size == 8 %} selected {% endif %}>8</option>
+                    <option value="9" {% if data.party_size == 9 %} selected {% endif %}>9</option>
+                    <option value="10" {% if data.party_size == 10 %} selected {% endif %}>10</option>
+                </select>
+                Responded to RSVP?<select name="response" class="form-select-sm" style="padding-top: 10px; padding-bottom: 10px; margin-left: 5px; margin-right: 10px" required>
+                    <option value="No" {% if data.responded_rsvp == "No" %} selected {% endif %}>No</option>
+                    <option value="Yes" {% if data.responded_rsvp == "Yes" %} selected {% endif %}>Yes</option>
+                </select>
+                RSVP:<select name="rsvp" class="form-select-sm" style="padding-top: 10px; padding-bottom: 10px;">
+                    <option value="0" {% if data.rsvp == 0 %} selected {% endif %}>0</option>
+                    <option value="1" {% if data.rsvp == 1 %} selected {% endif %}>1</option>
+                    <option value="2" {% if data.rsvp == 2 %} selected {% endif %}>2</option>
+                    <option value="3" {% if data.rsvp == 3 %} selected {% endif %}>3</option>
+                    <option value="4" {% if data.rsvp == 4 %} selected {% endif %}>4</option>
+                    <option value="5" {% if data.rsvp == 5 %} selected {% endif %}>5</option>
+                    <option value="6" {% if data.rsvp == 6 %} selected {% endif %}>6</option>
+                    <option value="7" {% if data.rsvp == 7 %} selected {% endif %}>7</option>
+                    <option value="8" {% if data.rsvp == 8 %} selected {% endif %}>8</option>
+                    <option value="9" {% if data.rsvp == 9 %} selected {% endif %}>9</option>
+                    <option value="10" {% if data.rsvp == 10 %} selected {% endif %}>10</option>
+                </select>
+                21+:<select name="over 21" class="form-select-sm" style="padding-top: 10px; padding-bottom: 10px;">
+                    <option value="0" {% if data.over_21 == 0 %} selected {% endif %}>0</option>
+                    <option value="1" {% if data.over_21 == 1 %} selected {% endif %}>1</option>
+                    <option value="2" {% if data.over_21 == 2 %} selected {% endif %}>2</option>
+                    <option value="3" {% if data.over_21 == 3 %} selected {% endif %}>3</option>
+                    <option value="4" {% if data.over_21 == 4 %} selected {% endif %}>4</option>
+                    <option value="5" {% if data.over_21 == 5 %} selected {% endif %}>5</option>
+                    <option value="6" {% if data.over_21 == 6 %} selected {% endif %}>6</option>
+                    <option value="7" {% if data.over_21 == 7 %} selected {% endif %}>7</option>
+                    <option value="8" {% if data.over_21 == 8 %} selected {% endif %}>8</option>
+                    <option value="9" {% if data.over_21 == 9 %} selected {% endif %}>9</option>
+                    <option value="10" {% if data.over_21 == 10 %} selected {% endif %}>10</option>
+                </select>
+                <div class="justify-content-center">
+                    <p style="margin-bottom: 0rem;">Events Invited: </p>
+                    Haldi<input type="checkbox" value="Haldi" name="events invited" style="margin-right: 1rem;" {% if "Haldi" in data.events_invited %} checked {% endif %}>
+                    Mendhi<input type="checkbox" value="Mendhi" name="events invited" style="margin-right: 1rem;" {% if "Mendhi" in data.events_invited %} checked {% endif %}>
+                    Wedding<input type="checkbox" value="Wedding" name="events invited" style="margin-right: 1rem;" {% if "Wedding" in data.events_invited %} checked {% endif %}>
+                    Reception<input type="checkbox" value="Reception" name="events invited" style="margin-right: 1rem;" {% if "Reception" in data.events_invited %} checked {% endif %}>
+                </div> 
+                <div>
+                    <h6 style="text-align: left">Guests:</h6>
+                    {% for guest in guests if data.party_size > 1 %}
+                        <div class="row" style="padding-top: 1rem">
+                            <div class="col-lg-4" style="text-align: center">
+                                <input type="text" name="guest name" class="form-control" placeholder="Full Name" value="{{guest}}">
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% for guest in range(data.party_size - guest_num - 1) %}
+                    <div class="row" style="padding-top: 1rem">
+                        <div class="col-lg-4" style="text-align: center">
+                            <input type="text" name="guest name" class="form-control" placeholder="Full Name">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div style="padding-top: 0.5rem; display:inline-block">
+                    <input type="submit" value="Edit Guest Details" class="btn custom-btn" style="text-align: center;">
+                </div>
+                <a href="/guestlist" class="btn custom-btn" style="display:inline-block">Cancel</a>
+            </form>
+            <form action="/removeguest" method="POST" style="text-align: center; margin-top: 5px;">
+                <input type="hidden" name="id" value="{{data.id}}">
+                <input type="submit" value="Delete" class="btn custom-btn">
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

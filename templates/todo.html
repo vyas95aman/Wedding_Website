@@ -1,0 +1,109 @@
+{% extends "admin_layout.html" %}
+
+{% block main %}
+    <div class="container section-block section-padding">
+        <div class="col-lg-8 col-12 mx-auto" style="padding-top: 5rem;">
+            <h2 class="section-title-wrap">Add New Item</h2>
+            <form style="text-align: center;" method="POST" action="/todo">
+                <input type="text" name="tag" placeholder="Tag (Optional)" style="padding-top: 5px; padding-bottom: 5px;">
+                <input type="text" name="description" placeholder="Description" required class="col-5" style="padding-top: 5px; padding-bottom: 5px;"> 
+                <select name="status" placeholder="Status" class="form-select-sm" style="padding-top: 10px; padding-bottom: 10px;" required>
+                    <option selected value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+                <input type="submit" value="Add New Item" class="btn custom-btn">
+            </form>
+        </div>
+
+        <div class="container" style="padding-top: 30px;">
+            <h2 class="section-title">To Do</h2>
+            <table class="table table-hover table-striped" id="sortTable">
+                <thead>
+                    <tr style="font-size: medium;">
+                        <th>#</th>
+                        <th>Tag</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th data-orderable="false">Edit</th>
+                        <th data-orderable="false">Delete</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: medium; vertical-align: middle;">
+                    {% for item in todolist %} 
+                        <tr>
+                            <td>{{item.id}}</td>
+                            <td>{{item.tag}}</td>
+                            <td>{{item.description}}</td>
+                            <td>{{item.status}}</td>
+                            <td>
+                                <form action="/status" method="POST">
+                                    <input type="hidden" name="id" value="{{ item.id }}">
+                                    <input type="hidden" name="status" value="{{ item.status }}">
+                                    <input type="submit" value="Toggle Status" class="btn custom-btn">
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/delete" method="POST">
+                                    <input type="hidden" name="id" value="{{ item.id }}">
+                                    <input type="submit" value="Delete" class="btn custom-btn">
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %} 
+                </tbody>
+            </table>
+        </div>
+        <script>
+            $('#sortTable').DataTable({
+                paging: false,
+                info: false,
+            });
+        </script>
+
+        <div class="container" style="padding-top: 30px;">
+            <h2 class="section-title">Completed</h2>
+            <table class="table table-hover table-striped" id="sortTable1">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tag</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th data-orderable="false">Edit</th>
+                        <th data-orderable="false">Delete</th>
+                    </tr>
+                </thead>
+                <tbody style="vertical-align: middle;">
+                    {% for item in completedlist %} 
+                        <tr>
+                            <td>{{item.id}}</td>
+                            <td>{{item.tag}}</td>
+                            <td>{{item.description}}</td>
+                            <td>{{item.status}}</td>
+                            <td>
+                                <form action="/status" method="POST">
+                                    <input type="hidden" name="id" value="{{ item.id }}">
+                                    <input type="hidden" name="status" value="{{ item.status }}">
+                                    <input type="submit" value="Toggle Status" class="btn custom-btn">
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/delete" method="POST">
+                                    <input type="hidden" name="id" value="{{ item.id }}">
+                                    <input type="submit" value="Delete" class="btn custom-btn">
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %} 
+                </tbody>
+            </table>
+        </div>
+        <script>
+            $('#sortTable1').DataTable({
+                paging: false,
+                info: false,
+            });
+        </script>
+    </div>
+{% endblock %}
