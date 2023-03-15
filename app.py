@@ -66,6 +66,8 @@ def login():
             session['admin'] = True
             flash("Welcome Back", "success")
             return redirect("/")
+        else: 
+            redirect("/login")
     else:
         return render_template("login.html")
 
