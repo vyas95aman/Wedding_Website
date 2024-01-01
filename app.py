@@ -1,5 +1,5 @@
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, make_response, jsonify
 from flask_session import Session
 from functools import wraps
 import sqlite3
@@ -41,8 +41,40 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+@app.route("/landing", methods=["GET", "POST"])
+def landing():
+    if request.method == "POST":
+        password = request.form.get("password")
+        if password == "test":
+            response = make_response(render_template("index.html"))
+            response.set_cookie("password_entered", "true")
+            return response
+        else:
+            error = "Incorrect password. Please try again."
+            return render_template("landing.html", error=error)
+    else:
+        if request.cookies.get("password_entered") == "true":
+            return render_template('index.html')
+        return render_template("landing.html", error=None)
+
+@app.route("/check_names", methods=["POST"])
+def check_names():
+    data = request.get_json()
+    first_name = data.get("firstName")
+    last_name = data.get("lastName")
+    name = (first_name + " " + last_name).title()
+    result = db.execute("SELECT id FROM guestlist WHERE name=? OR guest_names=?", name, name)
+    if id:
+        response = {"valid": result}
+    else:
+        response = jsonify({"valid": False})
+    return jsonify(response)
+
 @app.route("/", methods=["GET", "POST"])
 def index():
+    if request.cookies.get("password_entered") != "true":
+        return redirect("/landing")
+
     if request.method == "POST":
         name = (request.form.get("first name") + " " + request.form.get("last name")).title()
         id = db.execute("SELECT id FROM guestlist WHERE name=? OR guest_names=?", name, name)
@@ -52,8 +84,9 @@ def index():
             event = event.split(" ")[0]
             return redirect(f"/rsvp/{event}/{id}")
         else:
-            flash("Sorry, please try a different member of your party.", "warning")
+            flash("An error occured. Please try again.", "warning")
             return redirect('/')
+            # return jsonify({"valid": False})
     else:
         return render_template("index.html")
 
