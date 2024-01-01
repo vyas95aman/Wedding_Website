@@ -86,7 +86,6 @@ def index():
         else:
             flash("An error occured. Please try again.", "warning")
             return redirect('/')
-            # return jsonify({"valid": False})
     else:
         return render_template("index.html")
 
