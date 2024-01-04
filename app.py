@@ -3,6 +3,7 @@ from flask import Flask, flash, redirect, render_template, request, session, mak
 from flask_session import Session
 from functools import wraps
 import sqlite3
+import time
 
 # Configure application
 app = Flask(__name__)
@@ -36,26 +37,33 @@ def after_request(response):
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session.get('admin') is None:
+        if session.get('admin') is not True:
             return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
+
+# Password required
+def pass_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('auth') is not True:
+            return redirect("/landing")
         return f(*args, **kwargs)
     return decorated_function
 
 @app.route("/landing", methods=["GET", "POST"])
 def landing():
     if request.method == "POST":
-        password = request.form.get("password")
-        if password == "test":
-            response = make_response(render_template("index.html"))
-            response.set_cookie("password_entered", "true")
-            return response
+        password = request.form.get('password')
+        if password == "1234":
+            session['auth'] = True
+            return jsonify({'success': True, 'message': 'Password is correct'})
         else:
-            error = "Incorrect password. Please try again."
-            return render_template("landing.html", error=error)
+            return jsonify({'success': False, 'message': 'Incorrect password. Please try again.'})
     else:
-        if request.cookies.get("password_entered") == "true":
+        if session.get("auth") == True:
             return render_template('index.html')
-        return render_template("landing.html", error=None)
+        return render_template("landing.html")
 
 @app.route("/check_names", methods=["POST"])
 def check_names():
@@ -71,10 +79,8 @@ def check_names():
     return jsonify(response)
 
 @app.route("/", methods=["GET", "POST"])
+@pass_required
 def index():
-    if request.cookies.get("password_entered") != "true":
-        return redirect("/landing")
-
     if request.method == "POST":
         name = (request.form.get("first name") + " " + request.form.get("last name")).title()
         id = db.execute("SELECT id FROM guestlist WHERE name=? OR guest_names=?", name, name)
@@ -87,9 +93,13 @@ def index():
             flash("An error occured. Please try again.", "warning")
             return redirect('/')
     else:
-        return render_template("index.html")
+        if session.get("auth") == True:
+            return render_template("index.html")
+        else:
+            return redirect("/landing")
 
 @app.route("/login", methods=["GET", "POST"])
+@pass_required
 def login():
     if request.method == "POST":
         username = request.form.get("username")
@@ -105,11 +115,12 @@ def login():
 
 @app.route("/logout")
 def logout():
-    session.clear()
+    session['admin'] = False
     return redirect("/")
 
 @app.route("/todo", methods=["GET", "POST"])
 @login_required
+@pass_required
 def todo():
     if request.method == "POST":
         tag = request.form.get("tag")
@@ -124,6 +135,7 @@ def todo():
 
 @app.route("/delete", methods=["POST"])
 @login_required
+@pass_required
 def delete():
     item_id = request.form.get("id")
     if item_id:
@@ -132,6 +144,7 @@ def delete():
 
 @app.route("/status", methods=["POST"])
 @login_required
+@pass_required
 def status():
     item_id = request.form.get("id")
     status = request.form.get("status")
@@ -145,10 +158,11 @@ def status():
 
 @app.route("/guestlist", methods=["GET", "POST"])
 @login_required
+@pass_required
 def guestlist():
     if request.method == "POST":
         title = request.form.get("title")
-        name = request.form.get("name")
+        name = request.form.get("name").title()
         category = request.form.get("category")
         email = request.form.get("email")
         phone_number = request.form.get("phone number")
@@ -191,6 +205,7 @@ def guestlist():
 
 @app.route("/removeguest", methods=["POST"])
 @login_required
+@pass_required
 def remove():
     person = request.form.get("id")
     if person:
@@ -199,6 +214,7 @@ def remove():
 
 @app.route("/editguest/<int:id>", methods=["GET", "POST"])
 @login_required
+@pass_required
 def editguest(id):
     if request.method == "POST":
         title = request.form.get("title")
@@ -224,6 +240,7 @@ def editguest(id):
         return render_template("editguest.html", person=person, guests=guests, guest_num=guest_num)
 
 @app.route("/rsvp/<event>/<int:id>", methods=["GET", "POST"])
+@pass_required
 def rsvp(event, id):
     if request.method == "POST":
         # Clear saved responses if user is updating
