@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
     <head>
@@ -99,7 +98,7 @@
                             {% endif %}
                             
                             <div class="col-lg-6; rsvp-user-wrap">
-                                <form action="/rsvp/{{event}}/{{data.id}}" method="POST" class="custom-form rsvp-form">
+                                <form action="/rsvp/{{hash}}{{data.id}}/{{event}}" method="POST" class="custom-form rsvp-form">
                                 <div class="row justify-content-center" style="text-align:center">
                                     <h5 style="text-align:center">Guest 1</h5>
                                     <div class="col-lg-5" style="margin-left: 5rem; margin-right: 5rem">

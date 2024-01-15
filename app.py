@@ -4,6 +4,7 @@ from flask_session import Session
 from functools import wraps
 import sqlite3
 import time
+import random 
 
 # Configure application
 app = Flask(__name__)
@@ -88,7 +89,8 @@ def index():
             id = id[0]['id']
             event = db.execute("SELECT events_invited FROM guestlist WHERE id=?", id)[0]['events_invited']
             event = event.split(" ")[0]
-            return redirect(f"/rsvp/{event}/{id}")
+            hash = random.getrandbits(128)
+            return redirect(f"/rsvp/{hash}{id}/{event}")
         else:
             flash("An error occured. Please try again.", "warning")
             return redirect('/')
@@ -239,9 +241,9 @@ def editguest(id):
         guest_num = len(guests)
         return render_template("editguest.html", person=person, guests=guests, guest_num=guest_num)
 
-@app.route("/rsvp/<event>/<int:id>", methods=["GET", "POST"])
+@app.route("/rsvp/<hash><int:id>/<event>", methods=["GET", "POST"])
 @pass_required
-def rsvp(event, id):
+def rsvp(hash, id, event):
     if request.method == "POST":
         # Clear saved responses if user is updating
         db.execute(f"UPDATE guestlist SET {event}='' WHERE id=?", id)
@@ -268,9 +270,8 @@ def rsvp(event, id):
             event = "Reception"
         else:
             db.execute("UPDATE guestlist SET responded_rsvp=? WHERE id=?", "Yes", id)
-            flash("Thank you for your RSVP!", "success")
-            return redirect("/")
-        return redirect(f"/rsvp/{event}/{id}")
+            return (redirect(f"/thankyou/{hash}{id}"))
+        return redirect(f"/rsvp/{hash}{id}/{event}")
 
     else:
         person = db.execute("SELECT * FROM guestlist WHERE id = ?", id)
@@ -278,4 +279,9 @@ def rsvp(event, id):
         guests = guests.split(", ")
         accepted = person[0][event]
         accepted = accepted.split(", ")
-        return render_template("rsvp.html", person=person, guests=guests, event=event, accepted=accepted)
+        return render_template("rsvp.html", person=person, guests=guests, event=event, accepted=accepted, hash=hash)
+    
+@app.route("/thankyou/<hash><int:id>", methods=["GET"])
+@pass_required
+def thankyou(hash, id):
+    return render_template("thankyou.html")

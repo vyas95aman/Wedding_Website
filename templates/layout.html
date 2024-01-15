@@ -37,13 +37,13 @@
                             <a href="#section_2" class="nav-link">Welcome</a>
                         </li>
                         <li class="nav item">
-                            <a href="#section_3" class="nav-link">The Wedding</a>
+                            <a href="#section_3" class="nav-link">Wedding Guide</a>
                         </li>
                         <li class="nav item">
                             <a href="#section_4" class="nav-link">Gallery</a>
                         </li>
                         <li class="nav item">
-                            <a href="#section_5" class="nav-link">RSVP</a>
+                            <a href="#" class="nav-link scroll-to-section" data-target="section_5">RSVP</a>
                         </li>
                         <li class="nav item">
                             <a href="#section_6" class="nav-link">Gifts</a>
@@ -62,9 +62,9 @@
                                 <a href="/logout" class="nav-link">Log Out</a>
                             </li>
                         {% else %}
-                            <li class="nav item">
+                            <!-- <li class="nav item">
                                 <a href="/login" class="nav-link">Log In</a>
-                            </li>
+                            </li> -->
                         {% endif %}
                     </ul>
                 </div>
@@ -87,6 +87,28 @@
         <main>
             {% block main %}{% endblock %}
         </main>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Select all links with the class 'scroll-to-section'
+                var links = document.querySelectorAll('.scroll-to-section');
+            
+                // Handle link clicks
+                links.forEach(function (link) {
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault();
+            
+                        // Get the target section ID from the data attribute
+                        var targetId = link.getAttribute('data-target');
+            
+                        // Scroll smoothly to the target section
+                        document.getElementById(targetId).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    });
+                });
+            });
+        </script>
 
     </body>
 </html>
