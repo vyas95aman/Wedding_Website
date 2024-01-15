@@ -90,7 +90,7 @@ def index():
             event = db.execute("SELECT events_invited FROM guestlist WHERE id=?", id)[0]['events_invited']
             event = event.split(" ")[0]
             hash = random.getrandbits(128)
-            return redirect(f"/rsvp/{hash}{id}/{event}")
+            return redirect(f"/rsvp/{hash}{id}017/{event}")
         else:
             flash("An error occured. Please try again.", "warning")
             return redirect('/')
@@ -241,7 +241,7 @@ def editguest(id):
         guest_num = len(guests)
         return render_template("editguest.html", person=person, guests=guests, guest_num=guest_num)
 
-@app.route("/rsvp/<hash><int:id>/<event>", methods=["GET", "POST"])
+@app.route("/rsvp/<hash><int:id>017/<event>", methods=["GET", "POST"])
 @pass_required
 def rsvp(hash, id, event):
     if request.method == "POST":
@@ -271,7 +271,7 @@ def rsvp(hash, id, event):
         else:
             db.execute("UPDATE guestlist SET responded_rsvp=? WHERE id=?", "Yes", id)
             return (redirect(f"/thankyou/{hash}{id}"))
-        return redirect(f"/rsvp/{hash}{id}/{event}")
+        return redirect(f"/rsvp/{hash}{id}017/{event}")
 
     else:
         person = db.execute("SELECT * FROM guestlist WHERE id = ?", id)
