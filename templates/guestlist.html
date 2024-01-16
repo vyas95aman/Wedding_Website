@@ -54,10 +54,21 @@
                 </select>
                 <div class="justify-content-center">
                     <p style="margin-bottom: 0rem;">Events Invited: </p>
-                    Haldi<input type="checkbox" value="Haldi" name="events" style="margin-right: 1rem;">
-                    Mendhi<input type="checkbox" value="Mendhi" name="events" style="margin-right: 1rem;">
-                    Wedding<input type="checkbox" value="Wedding" name="events" style="margin-right: 1rem;">
-                    Reception<input type="checkbox" value="Reception" name="events" style="margin-right: 1rem;">
+                    <div style="display: inline-block; margin-right: 1rem;">
+                        Shreya's Haldi<input type="checkbox" value="Shreya_Haldi" name="events">
+                    </div>
+                    <div style="display: inline-block; margin-right: 1rem;">
+                        Aman's Haldi<input type="checkbox" value="Aman_Haldi" name="events">
+                    </div>
+                    <div style="display: inline-block; margin-right: 1rem;">
+                        Sangeet<input type="checkbox" value="Sangeet" name="events">
+                    </div>
+                    <div style="display: inline-block; margin-right: 1rem;">
+                        Wedding<input type="checkbox" value="Wedding" name="events">
+                    </div>
+                    <div style="display: inline-block; margin-right: 1rem;">
+                        Reception<input type="checkbox" value="Reception" name="events">
+                    </div>
                 </div> 
                 <div style="padding-top: 0.5rem">
                     <input type="submit" value="Add New Guest" class="btn custom-btn" style="text-align: center;">
@@ -66,8 +77,9 @@
         </div>
         <div style="padding-top: 30px; margin-left: 0rem; margin-right: 0rem">
             <h2 class="section-title">Guest List</h2>
-            <h6 style="display: inline-block">Haldi Attendance: {{haldi_count}}</h6>
-            <h6 style="display: inline-block; margin-left: 50px">Mendhi Attendance: {{mendhi_count}}</h6>
+            <h6 style="display: inline-block">Shreya's Haldi Attendance: {{Shreya_Haldi_count}}</h6>
+            <h6 style="display: inline-block; margin-left: 50px">Aman's Haldi Attendance: {{Aman_Haldi_count}}</h6>
+            <h6 style="display: inline-block; margin-left: 50px">Sangeet Attendance: {{sangeet_count}}</h6>
             <h6 style="display: inline-block; margin-left: 50px">Wedding Attendance: {{wedding_count}}</h6>
             <h6 style="display: inline-block; margin-left: 50px">Reception Attendance: {{reception_count}}</h6>
             <table class="table table-hover table-striped" id="sortTable" style="text-align: center;">
@@ -80,8 +92,9 @@
                         <th data-orderable="false">Email</th>
                         <th data-orderable="false">Phone Number</th>
                         <th data-orderable="false">Events Invited</th>
-                        <th data-orderable="false">Haldi</th>
-                        <th data-orderable="false">Mendhi</th>
+                        <th data-orderable="false">Shreya's Haldi</th>
+                        <th data-orderable="false">Aman's Haldi</th>
+                        <th data-orderable="false">Sangeet</th>
                         <th data-orderable="false">Wedding</th>
                         <th data-orderable="false">Reception</th>
                         <th data-orderable="false">Guest Names</th>
@@ -98,8 +111,9 @@
                             <td>{{person.email}}</td>
                             <td>{{person.phone_number}}</td>
                             <td>{{person.events_invited}}</td>
-                            <td>{{person.Haldi}}</td>
-                            <td>{{person.Mendhi}}</td>
+                            <td>{{person.Shreya_Haldi}}</td>
+                            <td>{{person.Aman_Haldi}}</td>
+                            <td>{{person.Sangeet}}</td>
                             <td>{{person.Wedding}}</td>
                             <td>{{person.Reception}}</td>
                             <td>{{person.guest_names}}</td>

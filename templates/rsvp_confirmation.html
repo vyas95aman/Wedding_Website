@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP Confirmation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 70%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        header {
+            background: #fff;
+            color: #29323c;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #bd8677 4px solid;
+        }
+
+        header a {
+            color: #29323c;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        header ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            overflow: hidden;
+        }
+
+        header #logo {
+            /* float: left; */
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        header #logo img {
+            height: 50px;
+            width: auto;
+            float: left;
+        }
+
+        header #logo a {
+            /* float: left; */
+            display: inline-block;
+        }
+
+        header nav {
+            /* float: right; */
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        header .main-nav ul {
+            float: left;
+            list-style: none;
+            margin-top: 25px;
+        }
+
+        header .main-nav ul li {
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+
+        header .main-nav ul li a {
+            text-decoration: none;
+            color: #29323c;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        header .main-nav ul li a:hover {
+            color: #bd8677;
+            transition: 0.5s;
+        }
+
+        header #menu-icon {
+            display: hidden;
+            float: right;
+            display: none;
+            color: #29323c;
+            font-size: 18px;
+            line-height: 70px;
+            cursor: pointer;
+            display: none;
+        }
+
+        header .main-nav {
+            display: inline;
+        }
+
+        @media only screen and (max-width: 768px) {
+            header #menu-icon {
+                display: block;
+            }
+
+            header ul,
+            header .main-nav {
+                display: none;
+            }
+
+            header .main-nav ul {
+                float: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+            }
+
+            header .main-nav ul li {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+                float: none;
+            }
+
+            header .showing {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <header>
+        <div class="container">
+            <div id="logo">
+                <a href="#">
+                    <img src="your-logo.png" alt="Logo">
+                </a>
+            </div>
+            <div id="menu-icon">Menu</div>
+            <nav class="main-nav">
+                <ul class="hidden">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">RSVP</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header> -->
+
+    <div class="container">
+        <h2>RSVP Confirmation</h2>
+        <p>Dear {{data.name}},</p>
+
+        {% if data.decline == False%}
+        <p>Thank you for confirming your attendance! We are thrilled to have you join us for this special occasion! Here is a summary of the events that you will be attending:</p>
+        <p>Event Details:</p>
+        <!-- <div class="row"> -->
+            {% if data.Shreya_Haldi != "" %}
+            <div class="col-md-3">
+                <ul style="list-style: none;">
+                    <li><strong>Event:</strong> Shreya's Haldi & Mendhi</li>
+                    <li><strong>Date:</strong> July 12th, 2024</li>
+                    <li><strong>Time:</strong> [Expans on this] 10:00 AM</li>
+                    <li><strong>Guests Attending:</strong> [Insert a list]</li>
+                    <li><strong>Location:</strong> 31 Sutton Point, Pittsford, NY 14534</li>
+                    <li><strong>Attire:</strong> Light, bright indian clothing. [edit this]</li>
+                </ul>
+            </div>
+            {% endif %}
+            {% if data.Aman_Haldi != "" %}
+            <div class="col-md-3">
+                <ul style="list-style: none;">
+                    <li><strong>Event:</strong> Aman's Puja & Haldi</li>
+                    <li><strong>Date:</strong> July 11th, 2024</li>
+                    <li><strong>Time:</strong> 10:00 AM</li>
+                    <li><strong>Guests Attending:</strong> [Insert a list]</li>
+                    <li><strong>Location:</strong> 1387 Needham Circle, Hatfield, PA 19440</li>
+                    <li><strong>Attire:</strong> Light, bright indian clothing. [edit this]</li>
+                </ul>
+            </div>
+            {% endif %}
+            {% if data.Sangeet != "" %}
+            <div class="col-md-3">
+                <ul style="list-style: none;">
+                    <li><strong>Event:</strong> Sangeet</li>
+                    <li><strong>Date:</strong> July 13th, 2024</li>
+                    <li><strong>Time:</strong> 6:00 PM</li>
+                    <li><strong>Guests Attending:</strong> [Insert a list]</li>
+                    <li><strong>Location:</strong> Holiday Inn</li>
+                    <li><strong>Address:</strong> 70 State Street, Rochester, NY 14614</li>
+                    <li><strong>Attire:</strong> Light, bright indian clothing. [edit this]</li>
+                </ul>
+            </div>
+            {% endif %}
+            {% if data.Wedding != "" %}
+            <div class="col-md-3">
+                <ul style="list-style: none;">
+                    <li><strong>Event:</strong> Wedding</li>
+                    <li><strong>Date:</strong> July 14th, 2024</li>
+                    <li><strong>Time:</strong> Barat starts at 9:45 AM</li>
+                    <li><strong>Guests Attending:</strong> [Insert a list]</li>
+                    <li><strong>Location:</strong> The Wintergarden</li>
+                    <li><strong>Address:</strong> 1 Bausch and Lomb Pl, Rochester, NY 14604</li>
+                    <li><strong>Attire:</strong> Light, bright indian clothing. [edit this]</li>
+                    <li><strong>Parking:</strong> Across entrance [edit this]</li>
+                </ul>
+            </div>
+            {% endif %}
+            {% if data.Reception != "" %}
+            <div class="col-md-3">
+                <ul style="list-style: none;">  
+                    <li><strong>Event:</strong> Reception</li>
+                    <li><strong>Date:</strong> July 14th, 2024</li>
+                    <li><strong>Time:</strong> 6:00 PM</li>
+                    <li><strong>Guests Attending:</strong> [Insert a list]</li>
+                    <li><strong>Location:</strong> The Wintergarden</li>
+                    <li><strong>Address:</strong> 1 Bausch and Lomb Pl, Rochester, NY 14604</li>
+                    <li><strong>Attire:</strong> Light, bright indian clothing. [edit this]</li>
+                    <li><strong>Parking:</strong> Across entrance [edit this]</li>
+                </ul>
+            </div>
+            {% endif %}
+        <!-- </div> -->
+        <p>We look forward to celebrating with you!</p>
+        {% else %}
+        <p>Thank you for confirming your attendance!</p>
+        <p>We'll miss having you with us on our special day, but we completely understand that plans and commitments vary. We're grateful for your warm wishes.</p>
+        {% endif %}
+        <p>With love,<br>Shreya and Aman</p>
+    </div>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, make_response, jsonify
+from flask_mail import Message, Mail
 from flask_session import Session
 from functools import wraps
 import sqlite3
@@ -16,6 +17,16 @@ if __name__ == '__main__':
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+# Configure Flask-Mail to send confirmation emails
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+# app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USERNAME'] = 'shreyaandaman2024@gmail.com'
+app.config['MAIL_PASSWORD'] = 'gqyj bxop uhhi ihcv'
+mail = Mail(app)
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
@@ -185,17 +196,23 @@ def guestlist():
             temp = i['Wedding'].split(", ")
             wedding_count += len(temp)
 
-        count = db.execute("SELECT Haldi from guestlist WHERE Haldi is not ''")
-        haldi_count = 0
+        count = db.execute("SELECT Shreya_Haldi from guestlist WHERE Shreya_Haldi is not ''")
+        Shreya_Haldi_count = 0
         for i in count:
-            temp = i['Haldi'].split(", ")
-            haldi_count += len(temp)
+            temp = i['Shreya_Haldi'].split(", ")
+            Shreya_Haldi_count += len(temp)
 
-        count = db.execute("SELECT Mendhi from guestlist WHERE Mendhi is not ''")
-        mendhi_count = 0
+        count = db.execute("SELECT Aman_Haldi from guestlist WHERE Aman_Haldi is not ''")
+        Aman_Haldi_count = 0
         for i in count:
-            temp = i['Mendhi'].split(", ")
-            mendhi_count += len(temp)
+            temp = i['Aman_Haldi'].split(", ")
+            Aman_Haldi_count += len(temp)
+
+        count = db.execute("SELECT Sangeet from guestlist WHERE Sangeet is not ''")
+        sangeet_count = 0
+        for i in count:
+            temp = i['Sangeet'].split(", ")
+            sangeet_count += len(temp)
 
         count = db.execute("SELECT Reception from guestlist WHERE Reception is not ''")
         reception_count = 0
@@ -203,7 +220,7 @@ def guestlist():
             temp = i['Reception'].split(", ")
             reception_count += len(temp)
 
-        return render_template("guestlist.html", guestlist=guestlist, wedding_count=wedding_count, haldi_count=haldi_count, mendhi_count=mendhi_count, reception_count=reception_count)
+        return render_template("guestlist.html", guestlist=guestlist, wedding_count=wedding_count, Shreya_Haldi_count=Shreya_Haldi_count, Aman_Haldi_count=Aman_Haldi_count, sangeet_count=sangeet_count, reception_count=reception_count)
 
 @app.route("/removeguest", methods=["POST"])
 @login_required
@@ -262,14 +279,19 @@ def rsvp(hash, id, event):
         guests = ', '.join(guests)
         attending = ', '.join(attending)
         db.execute(f"UPDATE guestlist SET name=?, email=?, guest_names=?, {event}=? WHERE id=?", name, email, guests, attending, id)
-        if event == "Haldi":
-            event = "Mendhi"
-        elif event == "Mendhi":
+        if event == "Shreya_Haldi" or event == "Aman_Haldi":
+            event = "Sangeet"
+        elif event == "Sangeet":
             event = "Wedding"
         elif event == "Wedding":
             event = "Reception"
         else:
             db.execute("UPDATE guestlist SET responded_rsvp=? WHERE id=?", "Yes", id)
+            data =  db.execute("SELECT * FROM guestlist WHERE id=?", id)[0]
+            data['decline'] = False
+            if data["Shreya_Haldi"] is "" and data["Aman_Haldi"] is "" and data["Sangeet"] is "" and data["Wedding"] is "" and data["Reception"] is "":
+                data['decline'] = True
+            send_email(subject="Shreya & Aman's Wedding RSVP Confirmation", template='rsvp_confirmation.html', recipients=[email], sender='amanandshreya2024.com', data=data)
             return (redirect(f"/thankyou/{hash}{id}"))
         return redirect(f"/rsvp/{hash}{id}017/{event}")
 
@@ -285,3 +307,8 @@ def rsvp(hash, id, event):
 @pass_required
 def thankyou(hash, id):
     return render_template("thankyou.html")
+
+def send_email(subject, template, recipients, sender, data):
+    msg = Message(subject, recipients=recipients, sender=sender, html=render_template(template, data=data))
+    mail.send(msg)
+    print("INFO :: Mail sent successfully")

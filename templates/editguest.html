@@ -56,10 +56,22 @@
                 </select>
                 <div class="justify-content-center">
                     <p style="margin-bottom: 0rem;">Events Invited: </p>
-                    Haldi<input type="checkbox" value="Haldi" name="events invited" style="margin-right: 1rem;" {% if "Haldi" in data.events_invited %} checked {% endif %}>
-                    Mendhi<input type="checkbox" value="Mendhi" name="events invited" style="margin-right: 1rem;" {% if "Mendhi" in data.events_invited %} checked {% endif %}>
-                    Wedding<input type="checkbox" value="Wedding" name="events invited" style="margin-right: 1rem;" {% if "Wedding" in data.events_invited %} checked {% endif %}>
-                    Reception<input type="checkbox" value="Reception" name="events invited" style="margin-right: 1rem;" {% if "Reception" in data.events_invited %} checked {% endif %}>
+                    <div style="display: inline-block; margin-right: 1rem;">
+                        Shreya's Haldi<input type="checkbox" value="Shreya_ Haldi" name="events invited" {% if "Shreya_Haldi" in data.events_invited %} checked {% endif %}>
+                    </div>
+                    <div style="display: inline-block; margin-right: 1rem;">
+                        Aman's Haldi<input type="checkbox" value="Aman_Haldi" name="events invited" {% if "Aman_Haldi" in data.events_invited %} checked {% endif %}>
+                    </div>
+                    <div style="display: inline-block; margin-right: 1rem;">
+                        Sangeet<input type="checkbox" value="Sangeet" name="events invited" {% if "Sangeet" in data.events_invited %} checked {% endif %}>
+                    </div>
+                    <div style="display: inline-block; margin-right: 1rem;">
+                        Wedding<input type="checkbox" value="Wedding" name="events invited" {% if "Wedding" in data.events_invited %} checked {% endif %}>
+                    </div>
+                    <div style="display: inline-block; margin-right: 1rem;">
+                        Reception<input type="checkbox" value="Reception" name="events invited" {% if "Reception" in data.events_invited %} checked {% endif %}>
+                    </div>
+                    </div>
                 </div> 
                 <div>
                     <h6 style="text-align: left">Guests:</h6>
