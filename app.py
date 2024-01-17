@@ -20,10 +20,9 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Configure Flask-Mail to send confirmation emails
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-# app.config['MAIL_PORT'] = 465
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USERNAME'] = 'shreyaandaman2024@gmail.com'
 app.config['MAIL_PASSWORD'] = 'gqyj bxop uhhi ihcv'
 mail = Mail(app)
@@ -289,6 +288,7 @@ def rsvp(hash, id, event):
             db.execute("UPDATE guestlist SET responded_rsvp=? WHERE id=?", "Yes", id)
             data =  db.execute("SELECT * FROM guestlist WHERE id=?", id)[0]
             data['decline'] = False
+            # change is to ==
             if data["Shreya_Haldi"] is "" and data["Aman_Haldi"] is "" and data["Sangeet"] is "" and data["Wedding"] is "" and data["Reception"] is "":
                 data['decline'] = True
             send_email(subject="Shreya & Aman's Wedding RSVP Confirmation", template='rsvp_confirmation.html', recipients=[email], sender='amanandshreya2024.com', data=data)
