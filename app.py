@@ -288,8 +288,7 @@ def rsvp(hash, id, event):
             db.execute("UPDATE guestlist SET responded_rsvp=? WHERE id=?", "Yes", id)
             data =  db.execute("SELECT * FROM guestlist WHERE id=?", id)[0]
             data['decline'] = False
-            # change is to ==
-            if data["Shreya_Haldi"] is "" and data["Aman_Haldi"] is "" and data["Sangeet"] is "" and data["Wedding"] is "" and data["Reception"] is "":
+            if data["Shreya_Haldi"] == "" and data["Aman_Haldi"] == "" and data["Sangeet"] == "" and data["Wedding"] == "" and data["Reception"] == "":
                 data['decline'] = True
             send_email(subject="Shreya & Aman's Wedding RSVP Confirmation", template='rsvp_confirmation.html', recipients=[email], sender='amanandshreya2024.com', data=data)
             return (redirect(f"/thankyou/{hash}{id}"))
