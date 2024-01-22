@@ -90,7 +90,8 @@ p{
     font-family: 'Monsieur La Doulaise'; 
     font-size: 60px; 
     font-weight: 700; 
-    color: #bd8677
+    color: #bd8677;
+    text-align: center;
 }
 
 .section-bg{
@@ -209,13 +210,17 @@ p{
 
     #section_1 {
         /* margin-top: -6rem; */
-        margin-top: 0rem; /* If navbar is hidden, moves section 1 up */
+        margin-top: -5rem; /* If navbar is hidden, moves section 1 up */
     }
 
     .static-text-smartphone {
         display: block;
         text-align: center;
-        padding-top: 25px;
+        padding-top: 30px;
+    }
+
+    .title {
+        font-size: 53px;
     }
 }
 
@@ -383,11 +388,10 @@ button:hover {
     margin-top: 10px;
 }
 
-/* Smartphone view */
+/* Smartphone View */
 @media (max-width: 768px) {
     #section_2 {
-        /* padding-top: 40px; */
-        padding-top: 14rem;
+        padding-top: 30px;
         margin-bottom: -50px;
     }
 
@@ -413,7 +417,7 @@ button:hover {
     }
 
     .smartphone-scroll {
-        scroll-margin-top: -50px;
+        scroll-margin-top: -120px;
     }
 }
 
