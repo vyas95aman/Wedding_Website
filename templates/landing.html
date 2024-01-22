@@ -53,6 +53,17 @@
             var errorContainer = document.getElementById('error-container');
             errorContainer.innerHTML = '<p class="error-text">' + message + '</p>';
         }
+
+        // Listen for the 'keydown' event on the password input
+        document.getElementById('password').addEventListener('keydown', function(event) {
+        // Check if the pressed key is 'Enter'
+            if (event.key === 'Enter') {
+                // Prevent the default behavior (form submission)
+                event.preventDefault();
+                // Call the checkPassword function
+                checkPassword();
+            }
+        })
     </script>
 </body>
 </html>
