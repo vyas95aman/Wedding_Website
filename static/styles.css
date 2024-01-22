@@ -423,6 +423,6 @@ button:hover {
 
 @media (min-width: 769px) {
     .smartphone-scroll{
-        scroll-margin-top: 140px
+        scroll-margin-top: 6.5rem;
     }
 }
