@@ -21,6 +21,13 @@
     </head>
 
     <body>
+        <!-- Display a static name if viewed on smartphone -->
+        <div class="static-text-smartphone">
+            <a href="/" class="title navbar-brand mx-auto mx-lg-0" style="color: #bd8677">
+                <span>Shreya & Aman</span>
+            </a>
+        </div>
+
         <nav class="navbar navbar-expand-lg">
             <div class="container">
 
@@ -31,25 +38,25 @@
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav item">
-                            <a href="#section_1" class="nav-link">Home</a>
+                            <a href="#" class="nav-link scroll-to-section" data-target="section_1">Home</a>
                         </li>
                         <li class="nav item">
-                            <a href="#section_2" class="nav-link">Welcome</a>
+                            <a href="#" class="nav-link scroll-to-section" data-target="section_2">Welcome</a>
                         </li>
                         <li class="nav item">
-                            <a href="#section_3" class="nav-link">Wedding Guide</a>
+                            <a href="#" class="nav-link scroll-to-section" data-target="section_3">Wedding Guide</a>
                         </li>
                         <li class="nav item">
-                            <a href="#section_4" class="nav-link">Gallery</a>
+                            <a href="#" class="nav-link scroll-to-section" data-target="section_4">Gallery</a>
                         </li>
                         <li class="nav item">
                             <a href="#" class="nav-link scroll-to-section" data-target="section_5">RSVP</a>
                         </li>
                         <li class="nav item">
-                            <a href="#section_6" class="nav-link">Gifts</a>
+                            <a href="#" class="nav-link scroll-to-section" data-target="section_6">Gifts</a>
                         </li>
                         <li class="nav item">
-                            <a href="#section_7" class="nav-link">Contact Us</a>
+                            <a href="#" class="nav-link scroll-to-section" data-target="section_7">Contact Us</a>
                         </li>
                         {% if session["admin"] %} 
                             <li class="nav item">
