@@ -297,6 +297,7 @@ p{
     background-image: url('images/Pic-140.jpg');
     background-position: center;
     background-size: cover;
+    overflow-x: hidden;
 }
 
 .rsvp-form-wrap{
@@ -325,6 +326,31 @@ p{
     vertical-align: middle; 
     width: 50%; 
     padding-left: 20px;
+}
+
+.smartphone-rsvp-padding{
+    padding-top: 100px;
+}
+
+@media (max-width: 768px) {
+    .main {
+        align-items: center;
+    }
+    .event-wrap {
+        border-right: none;
+        border-bottom: 1px solid;
+    }
+
+    .smartphone-rsvp-padding {
+        padding-top: 10px;
+    }
+
+    .event-wrap,
+    .rsvp-user-wrap {
+        display: block;
+        width: 100%;
+        padding: 0;
+    }
 }
 
 /* Landing Page */
