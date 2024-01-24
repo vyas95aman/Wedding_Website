@@ -11,11 +11,23 @@
 
         <link rel="stylesheet" href="/static/styles.css">
 
+        <!-- Fix issue of margins having extra space -->
         <style>
-            *,
-            *::before,
-            *::after {
-                box-sizing: content-box;
+            @media (max-width: 786px) {
+                *,
+                *::before,
+                *::after {
+                    box-sizing: content-box;
+                }
+
+                .rsvp-form {
+                    margin: 1rem;
+                }
+
+                .rsvp-form-wrap {
+                    margin-bottom: 20px;
+                    margin-top: 10px;
+                }
             }
         </style>
     </head>
