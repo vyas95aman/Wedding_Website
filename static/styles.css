@@ -101,7 +101,7 @@ p{
 .section-padding {
     padding-top: 100px;
     padding-bottom: 100px;
-    scroll-margin-top: 2rem
+    /* scroll-margin-top: 2rem */
 }
 
 .section-title{
@@ -254,11 +254,6 @@ p{
         background-position-x: 50%;
     }
 
-    .custom-btn {
-        /* padding: 3vw 6vw; */
-        font-size: 0.9rem;
-    }
-
     .col-lg-6 h3 {
         font-size: 1.5rem;
     }
@@ -297,7 +292,6 @@ p{
     background-image: url('images/Pic-140.jpg');
     background-position: center;
     background-size: cover;
-    overflow-x: hidden;
 }
 
 .rsvp-form-wrap{
@@ -418,6 +412,10 @@ button:hover {
     margin-top: 10px;
 }
 
+.smartphone-scroll{
+    scroll-margin-top: 15vh;
+}
+
 /* Smartphone View */
 @media (max-width: 768px) {
     #section_2 {
@@ -447,12 +445,6 @@ button:hover {
     }
 
     .smartphone-scroll {
-        scroll-margin-top: -120px;
-    }
-}
-
-@media (min-width: 769px) {
-    .smartphone-scroll{
-        scroll-margin-top: 6.5rem;
-    }
+        scroll-margin-top: -6.5rem;
+    } 
 }
