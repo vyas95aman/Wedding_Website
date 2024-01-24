@@ -333,9 +333,11 @@ p{
 }
 
 @media (max-width: 768px) {
-    .main {
-        align-items: center;
+    .row {
+        margin-left: 0;
+        margin-right: 0;
     }
+
     .event-wrap {
         border-right: none;
         border-bottom: 1px solid;
@@ -350,6 +352,8 @@ p{
         display: block;
         width: 100%;
         padding: 0;
+        padding-top: 30px;
+        overflow-x: hidden;
     }
 }
 
