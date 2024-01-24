@@ -24,6 +24,21 @@
             justify-content: center;
             align-items: center;
         }
+
+        .rsvp-user-wrap{
+            padding-top: 75px;
+        }
+
+        @media (max-width: 768px) {
+            .rsvp-user-wrap {
+                padding-top: 50px;
+                padding-bottom: 50px;
+            }
+        }
+
+        .info-text{
+            font-weight: 900;
+        }
     </style>
 </head>
 
@@ -44,7 +59,7 @@
     </nav>
 
     <main>
-        <div class="container d-flex" style="margin-top: -3rem;">
+        <div class="container d-flex" style="margin-top: 1rem;">
             <div class="row mx-auto">
                 <div class="col-lg-12 mx-auto" style="text-align: center">
 
@@ -55,12 +70,12 @@
                         <h3 style="padding-top: 25px;">Hotel Accommodation Information</h3>
                         <p class="mb-4">For your convenience, we have arranged a room block at a nearby hotel. <br>Please complete your reservation by <u>June 1st, 2024</u>.</p>
 
-                        <ul class="mb-4" style="list-style: none;">
-                            <li><strong>Hotel:</strong> Holiday Inn</li>
-                            <li><strong>Address:</strong> 70 State St, Rochester, NY 14614</li>
-                            <li><strong>Room Block Link:</strong> <a href="https://www.holidayinn.com/redirect?path=hd&brandCode=HI&localeCode=en&regionCode=1&hotelCode=ROCNY&_PMID=99801505&GPC=SGE&cn=no&viewfullsite=true" target="_blank">Click here to reserve</a></li>
-                            <li class="text-muted col-8 mx-auto" style="margin-top: 2rem;">The discounted rate should auto apply, however please verify when booking the room block that the Group Rate option is selected under Rate Preference using Group Code: <b>SGE</b> and IATA #: <b>99801505</b>.</li>
-                        </ul>
+                        <div class="mb-4">
+                            <p style="font-family: Times; font-size: 18px;"><span class="info-text">Hotel:</span> Holiday Inn<br>
+                            <span class="info-text">Address:</span> 70 State St, Rochester, NY 14614<br>
+                            <span class="info-text">Room Block Link:</span> <a href="https://www.holidayinn.com/redirect?path=hd&brandCode=HI&localeCode=en&regionCode=1&hotelCode=ROCNY&_PMID=99801505&GPC=SGE&cn=no&viewfullsite=true" target="_blank">Click here to reserve</a></p>
+                            <p class="text-muted col-9 mx-auto" style="margin-top: 2rem;">The discounted rate should auto apply, however please verify when booking the room block that the Group Rate option is selected under Rate Preference using Group Code: <b>SGE</b> and IATA #: <b>99801505</b>.</p>
+                        </div>
 
                         <div class="col-lg-12 mx-auto" style="padding-top: 3rem;">
                             <a href="/" class="btn custom-btn">Return to Main Page</a>

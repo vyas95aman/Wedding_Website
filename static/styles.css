@@ -255,7 +255,7 @@ p{
     }
 
     .custom-btn {
-        padding: 3vw 6vw;
+        /* padding: 3vw 6vw; */
         font-size: 0.9rem;
     }
 
@@ -333,6 +333,10 @@ p{
 }
 
 @media (max-width: 768px) {
+    .rsvp-form-wrap {
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
 
     .event-wrap {
         border-right: none;
@@ -349,7 +353,7 @@ p{
         width: 100%;
         padding: 0;
         padding-top: 30px;
-        overflow-x: hidden;
+        /* overflow-x: hidden; */
     }
 }
 

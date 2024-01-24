@@ -10,26 +10,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 
         <link rel="stylesheet" href="/static/styles.css">
-
-        <!-- Fix issue of margins having extra space -->
-        <style>
-            @media (max-width: 786px) {
-                *,
-                *::before,
-                *::after {
-                    box-sizing: content-box;
-                }
-
-                .rsvp-form {
-                    margin: 1rem;
-                }
-
-                .rsvp-form-wrap {
-                    margin-bottom: 20px;
-                    margin-top: 10px;
-                }
-            }
-        </style>
     </head>
 
     <body>
@@ -171,11 +151,11 @@
                                     </div>
                                     {% if event == "Reception" %}
                                     <div class="col-lg-4 mx-auto text-center" style="padding-top: 3rem">
-                                        <button class="col-lg-8 btn custom-btn" type="submit" style=" margin-left: 25px">Submit</button>
+                                        <button class="col-lg-8 btn custom-btn submit-btn" type="submit">Submit</button>
                                     </div>
                                     {% else %}
                                     <div class="col-lg-4 mx-auto text-center" style="padding-top: 3rem;">
-                                        <button class="col-lg-8 btn custom-btn" type="submit" style=" margin-left: 25px">Next</button>
+                                        <button class="col-lg-8 btn custom-btn" type="submit">Next</button>
                                     </div>
                                     {% endif %}
                                 </form>
