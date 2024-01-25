@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".custom-form").addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent the form from submitting
 
-        var firstName = document.querySelector("[name='first name']").value;
-        var lastName = document.querySelector("[name='last name']").value;
+        var firstName = document.querySelector("[name='first name']").value.trim();
+        var lastName = document.querySelector("[name='last name']").value.trim();
 
         // Example AJAX request to check names
         var xhr = new XMLHttpRequest();

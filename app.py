@@ -6,6 +6,8 @@ from functools import wraps
 import sqlite3
 import time
 import random 
+import boto3
+# Resume bullet - migrated data from mysql local to dynamodb mysql 
 
 # Configure application
 app = Flask(__name__)
@@ -35,6 +37,9 @@ Session(app)
 # Configure to use SQLite database
 # CHANGE TO SQL-ALCHEMY later
 db = SQL("sqlite:///wedding.db")
+
+# Configure connection to DynamoDB
+dynamo = boto3.client('dynamodb')
 
 @app.after_request
 def after_request(response):
@@ -93,7 +98,7 @@ def check_names():
 @pass_required
 def index():
     if request.method == "POST":
-        name = (request.form.get("first name") + " " + request.form.get("last name")).title()
+        name = (request.form.get("first name").strip() + " " + request.form.get("last name").strip()).title()
         id = db.execute("SELECT id FROM guestlist WHERE name=? OR guest_names=?", name, name)
         if id:
             id = id[0]['id']

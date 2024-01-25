@@ -10,6 +10,34 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 
         <link rel="stylesheet" href="/static/styles.css">
+        <style>
+            @media (max-width: 768px) {
+                .submit-btn{
+                    padding-right: 67px;
+                }
+
+                .body{
+                    overflow-x: hidden;
+                }
+            }
+        </style>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Get all elements with the class 'guest-name-input'
+                var guestNameInputs = document.querySelectorAll('.guest-name-input');
+            
+                // Loop through each input element
+                guestNameInputs.forEach(function(input) {
+                    // Add an 'input' event listener to each input element
+                    input.addEventListener('input', function() {
+                        // If the input value is not empty, disable it
+                        input.disabled = input.value.trim() !== '';
+                    });
+                });
+            });
+        </script>
+
     </head>
 
     <body>
