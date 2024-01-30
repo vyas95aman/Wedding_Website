@@ -22,22 +22,6 @@
             }
         </style>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                // Get all elements with the class 'guest-name-input'
-                var guestNameInputs = document.querySelectorAll('.guest-name-input');
-            
-                // Loop through each input element
-                guestNameInputs.forEach(function(input) {
-                    // Add an 'input' event listener to each input element
-                    input.addEventListener('input', function() {
-                        // If the input value is not empty, disable it
-                        input.disabled = input.value.trim() !== '';
-                    });
-                });
-            });
-        </script>
-
     </head>
 
     <body>
@@ -67,9 +51,7 @@
 
                             <!-- Move event and form side by side -->
                             <div class="row">
-                                {% for data in person %}
-
-                                {% if event in data.events_invited %}
+                                {% if event in person.events_invited %}
 
                                 {% if event == "Shreya_Haldi" %}
                                 <div class="col-lg-6 event-wrap">
@@ -142,40 +124,41 @@
                                 {% endif %}
                                 
                                 <div class="col-lg-6; rsvp-user-wrap">
-                                    <form action="/rsvp/{{hash}}{{data.id}}017/{{event}}" method="POST" class="custom-form rsvp-form">
+                                    <form action="/rsvp/{{hash}}{{id}}017/{{event}}" method="POST" class="custom-form rsvp-form">
                                     <div class="row justify-content-center" style="text-align:center">
                                         <h5 style="text-align:center">Guest 1</h5>
                                         <div class="col-lg-5" style="margin-left: 5rem; margin-right: 5rem">
-                                            <input type="text" name="name" class="form-control" placeholder="Full Name" value="{{data.name}}" required>
+                                            <input type="text" name="name" class="form-control" placeholder="Full Name" value="{{person.name}}" readonly style="background-color: #D3D3D3;" required>
                                         </div>
         
                                         <div class="col-lg-5">
-                                            <input type="email" name="email" class="form-control" placeholder="E-mail Address" value="{{data.email}}" required>
+                                            <input type="email" name="email" class="form-control" placeholder="E-mail Address" value="{{person.email}}" required>
                                         </div>
 
                                         <div class="col-lg-9 align-items-center" style="margin: 0 auto;">
-                                            <input type="radio" class="btn-check" name="guest 1" id="Attending 1" autocomplete="off" value="Attending" {% if data.name in accepted %} checked {% endif %} required>
+                                            <input type="radio" class="btn-check" name="guest 1" id="Attending 1" autocomplete="off" value="Attending" {% if person.name in accepted %} checked {% endif %} required>
                                             <label class="btn btn-outline-secondary" for="Attending 1">Will Attend</label>
 
-                                            <input type="radio" class="btn-check" name="guest 1" id="Decline 1" autocomplete="off" value="Declined" {% if data.name not in accepted and data.responded_rsvp == 'Yes' %} checked {% endif %}>
+                                            <input type="radio" class="btn-check" name="guest 1" id="Decline 1" autocomplete="off" value="Declined" {% if person.name not in accepted and person.responded_rsvp == 'Yes' %} checked {% endif %}>
                                             <label class="btn btn-outline-secondary" for="Decline 1">Will Not Attend</label>
                                         </div> 
-                                        
-                                        {% for number in range(2, data.party_size + 1) %}
+                                        {% if person.party_size >= 2 %}
+                                        {% for number in range(2, person.party_size + 1) %}
                                         <div class="row justify-content-center" style="padding-top: 1rem; margin: 0 auto">
                                             <h5 style="text-align: center">Guest {{number}}</h5>
                                             <div class="col-lg-5">
-                                                <input type="text" name="guest name" class="form-control" placeholder="Full Name" value="{{guests[number - 2] if guests[number - 2]}}">
+                                                <input type="text" name="guest name" class="form-control guest-name-input" placeholder="Full Name" {% if accepted_num >= number and guests[number - 2] %} value="{{guests[number - 2]}}" readonly style="background-color: #D3D3D3;" {% endif %}>
                                             </div>
                                             <div class="col-lg-9 align-items-center">
-                                                <input type="radio" class="btn-check" name="guest {{number}}" id="Attending {{number}}" autocomplete="off" value="Attending" {% if guests[number - 2] and guests[number - 2] in accepted %} checked {% endif %}>
+                                                <input type="radio" class="btn-check" name="guest {{number}}" id="Attending {{number}}" autocomplete="off" value="Attending" {% if accepted_num >= number and guests[number - 2] in accepted %} checked {% endif %}>
                                                 <label class="btn btn-outline-secondary" for="Attending {{number}}">Will Attend</label>
                                                 
-                                                <input type="radio" class="btn-check" name="guest {{number}}" id="Decline {{number}}" autocomplete="off" value="Declined" {% if guests[number - 2] not in accepted and data.responded_rsvp == 'Yes' %} checked {% endif %}>
+                                                <input type="radio" class="btn-check" name="guest {{number}}" id="Decline {{number}}" autocomplete="off" value="Declined" {% if accepted_num >= number and guests[number - 2] not in accepted and person.responded_rsvp == 'Yes' %} checked {% endif %}>
                                                 <label class="btn btn-outline-secondary" for="Decline {{number}}">Will Not Attend</label>
                                             </div> 
                                         </div>
                                         {% endfor %}
+                                        {% endif %}
                                     </div>
                                     {% if event == "Reception" %}
                                     <div class="col-lg-4 mx-auto text-center" style="padding-top: 3rem">
@@ -189,7 +172,6 @@
                                 </form>
                                 </div>
                                 {% endif %}
-                                {% endfor %}
                             </div>
                         </div>
                     </div>

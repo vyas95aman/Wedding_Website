@@ -26,19 +26,6 @@
                     <option selected value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
-                RSVP:<select name="rsvp" class="form-select-sm" style="padding-top: 10px; padding-bottom: 10px;">
-                    <option selected value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
                 21+:<select name="over 21" class="form-select-sm" style="padding-top: 10px; padding-bottom: 10px;">
                     <option selected value="0">0</option>
                     <option value="1">1</option>
@@ -87,10 +74,10 @@
                     <tr style="font-size: small;">
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Party Size</th>
+                        <!-- <th>Party Size</th> -->
                         <th>Responded</th>
-                        <th data-orderable="false">Email</th>
-                        <th data-orderable="false">Phone Number</th>
+                        <!-- <th data-orderable="false">Email</th> -->
+                        <!-- <th data-orderable="false">Phone Number</th> -->
                         <th data-orderable="false">Events Invited</th>
                         <th data-orderable="false">Shreya's Haldi</th>
                         <th data-orderable="false">Aman's Haldi</th>
@@ -106,10 +93,10 @@
                         <tr>
                             <td>{{person.id}}</td>
                             <td>{{person.name}}</td>
-                            <td>{{person.party_size}}</td>
+                            <!-- <td>{{person.party_size}}</td> -->
                             <td>{{person.responded_rsvp}}</td>
-                            <td>{{person.email}}</td>
-                            <td>{{person.phone_number}}</td>
+                            <!-- <td>{{person.email}}</td> -->
+                            <!-- <td>{{person.phone_number}}</td> -->
                             <td>{{person.events_invited}}</td>
                             <td>{{person.Shreya_Haldi}}</td>
                             <td>{{person.Aman_Haldi}}</td>
