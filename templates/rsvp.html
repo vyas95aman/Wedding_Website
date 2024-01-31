@@ -142,23 +142,23 @@
                                             <input type="radio" class="btn-check" name="guest 1" id="Decline 1" autocomplete="off" value="Declined" {% if person.name not in accepted and person.responded_rsvp == 'Yes' %} checked {% endif %}>
                                             <label class="btn btn-outline-secondary" for="Decline 1">Will Not Attend</label>
                                         </div> 
-                                        {% if person.party_size >= 2 %}
+                                        
                                         {% for number in range(2, person.party_size + 1) %}
                                         <div class="row justify-content-center" style="padding-top: 1rem; margin: 0 auto">
                                             <h5 style="text-align: center">Guest {{number}}</h5>
                                             <div class="col-lg-5">
-                                                <input type="text" name="guest name" class="form-control guest-name-input" placeholder="Full Name" {% if accepted_num >= number and guests[number - 2] %} value="{{guests[number - 2]}}" readonly style="background-color: #D3D3D3;" {% endif %}>
+                                                <input type="text" name="guest name" class="form-control guest-name-input" placeholder="Full Name" {% if guests[number - 2] %} value="{{guests[number - 2]}}" readonly style="background-color: #D3D3D3;" {% endif %}>
                                             </div>
                                             <div class="col-lg-9 align-items-center">
-                                                <input type="radio" class="btn-check" name="guest {{number}}" id="Attending {{number}}" autocomplete="off" value="Attending" {% if accepted_num >= number and guests[number - 2] in accepted %} checked {% endif %}>
+                                                <input type="radio" class="btn-check" name="guest {{number}}" id="Attending {{number}}" autocomplete="off" value="Attending" {% if guests[number - 2] and guests[number - 2] in accepted %} checked {% endif %}>
                                                 <label class="btn btn-outline-secondary" for="Attending {{number}}">Will Attend</label>
                                                 
-                                                <input type="radio" class="btn-check" name="guest {{number}}" id="Decline {{number}}" autocomplete="off" value="Declined" {% if accepted_num >= number and guests[number - 2] not in accepted and person.responded_rsvp == 'Yes' %} checked {% endif %}>
+                                                <input type="radio" class="btn-check" name="guest {{number}}" id="Decline {{number}}" autocomplete="off" value="Declined" {% if guests[number - 2] not in accepted and person.responded_rsvp == 'Yes' %} checked {% endif %}>
                                                 <label class="btn btn-outline-secondary" for="Decline {{number}}">Will Not Attend</label>
                                             </div> 
                                         </div>
                                         {% endfor %}
-                                        {% endif %}
+
                                     </div>
                                     {% if event == "Reception" %}
                                     <div class="col-lg-4 mx-auto text-center" style="padding-top: 3rem">
