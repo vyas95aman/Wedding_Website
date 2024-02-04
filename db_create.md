@@ -20,3 +20,5 @@ CREATE TABLE guestlist (
     guest_names TEXT DEFAULT ""
 );
 
+# AKIA4M3WREY6CPSFWKGY
+# GYLDrwPJomQphuoxY1BsRDlpBP/uwU9qk+PzNm3S

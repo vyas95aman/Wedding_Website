@@ -6,21 +6,26 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&display=swap');
+
+
 :root{
     --white-color: #ffffff;
-    --primary-color: #bd8677;
-    --secondary-color: #146C7D;
-    --section-bg-color: #F0DECDF5;
-    --custom-btn-bg-color: var(--primary-color);
+    --primary-color: #ffffff;
+    --secondary-color: #ffffff;
+    --section-bg-color: rgb(160, 162, 144);
+    --custom-btn-bg-color: hsl(67, 10%, 36%);
     --dark-color: #000000;
-    --p-color: #717275;
+    --p-color: #fdfdfd;
     --border-color: #e9eaeb;
 
-    --body-font-family: 'Source Sans Pro' , sans-esrif ;
-    --title-font-family: 'Metal';
+    --body-font-family: 'Source Sans Pro' ;
+    --title-font-family: 'Sorts Mill Goudy';
 
     --h1-font-size: 72px ;
-    --h2-font-size: 55px ;
+    --h2-font-size: 40px ;
     --h3-font-size: 36px ;
     --h4-font-size: 32px ;
     --h5-font-size: 24px ;
@@ -63,7 +68,7 @@ h1{
     font-size: 72px;
 }
 h2{
-    font-size: 48px;
+    font-size: 36px;
     color: var(--secondary-color);
 }
 h3{
@@ -83,14 +88,14 @@ p{
     color: var(--p-color);
     font-size: 20px;
     font-weight: var(--font-weight-light);
-    font-family: 'Metal';
+    font-family: 'Sorts Mill Goudy';
 }
 
 .title{
-    font-family: 'Monsieur La Doulaise'; 
-    font-size: 60px; 
+    font-family: 'Cinzel Decorative'; 
+    font-size: 54px; 
     font-weight: 700; 
-    color: #bd8677;
+    color: #ffffff;
     text-align: center;
 }
 
@@ -105,7 +110,7 @@ p{
 }
 
 .section-title{
-    font-family: 'Fleur De Leah';
+    font-family: 'Cinzel Decorative';
 }
 
 .section-title-wrap{
@@ -151,6 +156,7 @@ p{
     font-family: var(--title-font-family);
     font-size: var(--p-font-size);
     font-weight: var(--font-weight-bold);
+    font-style: italic;
 }
 
 /* Buttons on turn transparent when hovering */
@@ -161,7 +167,7 @@ p{
 .custom-logo{
     font-family: 'Monsieur La Doulaise', cursive;
     font-size: 55px;
-    color: #CE9C9D;
+    color: #ffffff;
 }
 
 .edit-textbox{
@@ -180,7 +186,7 @@ p{
 }
 
 .is-sticky .navbar{
-    background: var(--section-bg-color);
+    background: rgba(160, 162, 144, 0.94);
 }
 
 .navbar-expand-lg .navbar-nav .nav-link{
@@ -220,7 +226,7 @@ p{
     }
 
     .title {
-        font-size: 53px;
+        font-size: 45px;
     }
 }
 
@@ -389,11 +395,13 @@ input {
     margin-bottom: 10px;
     width: 60%;
     box-sizing: border-box;
+    border-radius: 1px;
 }
 
 button {
     padding: 10px;
-    background-color: var(--custom-btn-bg-color);
+    background-color: rgb(141,141,113,1);
+    /* 121, 130, 97, 1 */
     color: var(--white-color);
     border: none;
     border-radius: 4px;

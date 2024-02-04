@@ -8,7 +8,6 @@ import time
 import random 
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
-# Resumé bullet - migrated data from mysql local to dynamodb mysql 
 
 # Configure application
 app = Flask(__name__)
@@ -89,14 +88,21 @@ def check_names():
     first_name = data.get("firstName")
     last_name = data.get("lastName")
     name = (first_name + " " + last_name).title()
-    result = db.execute("SELECT id FROM guestlist WHERE name=? OR guest_names=?", name, name)
-    # result = dynamo.scan(FilterExpression=Key('name').eq(name))['Items']
-    # print("Local result: ", local)
-    # print("Dynamo result: ", result)
-    if result:
-        response = {"valid": result}
+    id = db.execute("SELECT id FROM guestlist WHERE name= :name OR guest_names LIKE :search_text", name=name, search_text=f"%{name}%")
+    print("######################### ID ::", id)
+    print(len(id))
+    if id:
+        if len(id) == 1:
+            print("One : Length of id is:: ", len(id))
+            response = {"valid": id}
+        else:
+            print("Longer : Length of id is:: ", len(id))
+            # return prompt to pick from id/family members
+            response = {"valid": False}
     else:
+        print("No response for id")
         response = {"valid": False}
+    print("Response to javascript name check: ", response)
     return jsonify(response)
 
 @app.route("/", methods=["GET", "POST"])
@@ -105,9 +111,6 @@ def index():
     if request.method == "POST":
         name = (request.form.get("first name").strip() + " " + request.form.get("last name").strip()).title()
         resp = db.execute("SELECT id FROM guestlist WHERE name=? OR guest_names=?", name, name)[0]
-        # id = dynamo.scan(FilterExpression=Key('name').eq(name))['Items'][0]
-        # print("DB: ", id)
-        # print("Dynamo: ", resp)
         if resp:
             id = resp['id']
             event = db.execute("SELECT events_invited FROM guestlist WHERE id=?", id)[0]['events_invited']
@@ -198,74 +201,37 @@ def guestlist():
         events_invited = request.form.getlist("events")
         events_invited = ' '.join(events_invited)
         db.execute("INSERT INTO guestlist (title, name, category, email, phone_number, party_size, responded_rsvp, over_21, events_invited) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", title, name, category, email, phone_number, party_size, response, over_21, events_invited)
-        # dynamo.put_item( Item={
-        #     'party_size': int(party_size), 
-        #     'responded_rsvp': response if response else "No", 
-        #     'email': email, 
-        #     'name': name, 
-        #     'events_invited': events_invited, 
-        #     'category': category, 
-        #     'phone_number': phone_number, 
-        #     'id': dynamo.scan()['Count'] + 1,
-        #     'over_21': int(over_21), 
-        #     'title': title,
-        #     # DEFAULT VALUES
-        #     'Aman_Haldi': "",
-        #     'Shreya_Haldi': "",
-        #     'Sangeet': "",
-        #     'Wedding': "",
-        #     'Reception': "",
-        #     'Aman_Haldi_Number': 0,
-        #     'Shreya_Haldi_Number': 0,
-        #     'Sangeet_Number': 0,
-        #     'Wedding_Number': 0,
-        #     'Reception_Number': 0,
-        #     'guest_names': "",
-        #     })
         return redirect("/guestlist")
     else:
         guestlist = db.execute("SELECT * FROM guestlist")
-        # guestlist = dynamo.scan()['Items']
-        # print("DYNAMO :: ", dyn)
-        # print("SQL :: ", guestlist)
 
         count = db.execute("SELECT Wedding from guestlist WHERE Wedding is not ''")
-        # count = dynamo.scan(FilterExpression=Attr('Wedding').ne(""), ProjectionExpression='Wedding')['Items']
         wedding_count = 0
         for i in count:
-            # if i:
             temp = i['Wedding'].split(", ")
             wedding_count += len(temp)
 
         count = db.execute("SELECT Shreya_Haldi from guestlist WHERE Shreya_Haldi is not ''")
-        # count = dynamo.scan(FilterExpression=Attr('Shreya_Haldi').ne(""), ProjectionExpression='Shreya_Haldi')['Items']
         Shreya_Haldi_count = 0
         for i in count:
-            # if i:
             temp = i['Shreya_Haldi'].split(", ")
             Shreya_Haldi_count += len(temp)
 
         count = db.execute("SELECT Aman_Haldi from guestlist WHERE Aman_Haldi is not ''")
-        # count = dynamo.scan(FilterExpression=Attr('Aman_Haldi').ne(""), ProjectionExpression='Aman_Haldi')['Items']
         Aman_Haldi_count = 0
         for i in count:
-            # if i:
             temp = i['Aman_Haldi'].split(", ")
             Aman_Haldi_count += len(temp)
 
         count = db.execute("SELECT Sangeet from guestlist WHERE Sangeet is not ''")
-        # count = dynamo.scan(FilterExpression=Attr('Sangeet').ne(""), ProjectionExpression='Sangeet')['Items']
         sangeet_count = 0
         for i in count:
-            # if i:
             temp = i['Sangeet'].split(", ")
             sangeet_count += len(temp)
 
         count = db.execute("SELECT Reception from guestlist WHERE Reception is not ''")
-        # count = dynamo.scan(FilterExpression=Attr('Reception').ne(""), ProjectionExpression='Reception')['Items']
         reception_count = 0
         for i in count:
-            # if i:
             temp = i['Reception'].split(", ")
             reception_count += len(temp)
 
@@ -277,7 +243,6 @@ def guestlist():
 def remove():
     id = request.form.get("id")
     db.execute("DELETE FROM guestlist WHERE id = ?", id)
-    # dynamo.delete_item(Key={"id": id})
     return redirect("/guestlist")
 
 @app.route("/editguest/<int:id>", methods=["GET", "POST"])
@@ -285,7 +250,6 @@ def remove():
 @pass_required
 def editguest(id):
     if request.method == "POST":
-        # person = dynamo.scan(FilterExpression=Key('id').eq(id))['Items'][0]
         title = request.form.get("title")
         name = request.form.get("name")
         category = request.form.get("category")
@@ -300,16 +264,10 @@ def editguest(id):
         guests = [i for i in guests if i]
         guests = ', '.join(guests)
         db.execute("UPDATE guestlist SET title=?, name=?, category=?, email=?, phone_number=?, party_size=?, responded_rsvp=?, over_21=?, events_invited=?, guest_names=? WHERE id = ?", title, name, category, email, phone_number, party_size, response, over_21, events_invited, guests, id)
-        # dynamo.put_item(Item=person)
         return redirect("/guestlist") 
     else:
         person = db.execute("SELECT * FROM guestlist WHERE id = ?", id)[0]
-        # person = dynamo.scan(FilterExpression=Key('id').eq(id))['Items'][0]
-        # person = __convert_decimal_format(person)
-        # if 'guest_names' in person.keys():
         guests = person['guest_names'].split(", ")
-        # else: 
-            # guests = ""
         guest_num = len(guests)
         return render_template("editguest.html", person=person, guests=guests, guest_num=guest_num)
 
@@ -317,9 +275,7 @@ def editguest(id):
 @pass_required
 def rsvp(hash, id, event):
     if request.method == "POST":
-        # Clear saved responses if user is updating
-        # db.execute(f"UPDATE guestlist SET {event}='' WHERE id=?", id)
-        # person = dynamo.scan(FilterExpression=Key('id').eq(id))['Items'][0]
+        db.execute(f"UPDATE guestlist SET {event}='' WHERE id=?", id)
 
         name = request.form.get("name")
         email = request.form.get("email")
@@ -334,7 +290,6 @@ def rsvp(hash, id, event):
         attending_number = len(attending)
         attending = ', '.join(attending)
         db.execute(f"UPDATE guestlist SET name=?, email=?, guest_names=?, {event}=?, {event}_Number=? WHERE id=?", name, email, guests, attending, attending_number, id)
-        # dynamo.put_item(Item=person)
         if event == "Shreya_Haldi" or event == "Aman_Haldi":
             event = "Sangeet"
         elif event == "Sangeet":
@@ -343,8 +298,6 @@ def rsvp(hash, id, event):
             event = "Reception"
         else:
             db.execute("UPDATE guestlist SET responded_rsvp=? WHERE id=?", "Yes", id)
-            # person['responded_rsvp'] = 'Yes'
-            # dynamo.update_item(Key={"id": id}, AttributeUpdates={'responded_rsvp': {"Value": "Yes"}})
             person =  db.execute("SELECT * FROM guestlist WHERE id=?", id)[0]
             person['decline'] = False
             if person["Shreya_Haldi"] == "" and person["Aman_Haldi"] == "" and person["Sangeet"] == "" and person["Wedding"] == "" and person["Reception"] == "":
@@ -355,27 +308,19 @@ def rsvp(hash, id, event):
 
     else:
         person = db.execute("SELECT * FROM guestlist WHERE id = ?", id)[0]
-        # person = dynamo.scan(FilterExpression=Key('id').eq(id))['Items'][0]
-        # person = __convert_decimal_format(person)
         guests = person['guest_names'].split(", ")
-        # guests = guests
         accepted = person[event].split(", ")
-        # accepted = accepted
-        # accepted_num = len(accepted) + 2
         return render_template("rsvp.html", person=person, guests=guests, event=event, accepted=accepted, hash=hash, id=id)
     
 @app.route("/thankyou/<hash><int:id>", methods=["GET"])
 @pass_required
 def thankyou(hash, id):
-    return render_template("thankyou.html")
+    person =  db.execute("SELECT * FROM guestlist WHERE id=?", id)[0]
+    person['decline'] = False
+    if person["Shreya_Haldi"] == "" and person["Aman_Haldi"] == "" and person["Sangeet"] == "" and person["Wedding"] == "" and person["Reception"] == "":
+        person['decline'] = True
+    return render_template("thankyou.html", person=person)
 
 def send_email(subject, template, recipients, sender, data):
     msg = Message(subject, recipients=recipients, sender=sender, html=render_template(template, data=data))
     mail.send(msg)
-    print("INFO ############################ Mail sent successfully")
-
-# def __convert_decimal_format(person):
-#     for field in person:
-#         if type(person[field]) is not int and type(person[field]) is not str:
-#             person[field] = int(person[field])
-#     return person

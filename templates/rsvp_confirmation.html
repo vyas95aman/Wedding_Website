@@ -135,24 +135,6 @@
 </head>
 
 <body>
-    <!-- <header>
-        <div class="container">
-            <div id="logo">
-                <a href="#">
-                    <img src="your-logo.png" alt="Logo">
-                </a>
-            </div>
-            <div id="menu-icon">Menu</div>
-            <nav class="main-nav">
-                <ul class="hidden">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">RSVP</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header> -->
 
     <div class="container">
         <h2>RSVP Confirmation</h2>
@@ -161,7 +143,6 @@
         {% if data.decline == False%}
         <p>Thank you for confirming your attendance! We are thrilled to have you join us for this special occasion! Here is a summary of the events that you will be attending:</p>
         <p>Event Details:</p>
-        <!-- <div class="row"> -->
             {% if data.Shreya_Haldi != "" %}
             <div class="col-md-3">
                 <ul style="list-style: none;">
@@ -170,19 +151,19 @@
                     <li><strong>Time:</strong> [Expans on this] 10:00 AM</li>
                     <li><strong>Guests Attending:</strong> {{data.Shreya_Haldi}}</li>
                     <li><strong>Location:</strong> 31 Sutton Point, Pittsford, NY 14534</li>
-                    <li><strong>Attire:</strong> Light, bright indian clothing. [edit this]</li>
+                    <li><strong>Suggested Attire:</strong> Light, bright Indian clothing</li>
                 </ul>
             </div>
             {% endif %}
             {% if data.Aman_Haldi != "" %}
             <div class="col-md-3">
                 <ul style="list-style: none;">
-                    <li><strong>Event:</strong> Aman's Puja & Haldi</li>
+                    <li><strong>Event:</strong> Aman's Grah Shanti & Haldi</li>
                     <li><strong>Date:</strong> July 11th, 2024</li>
                     <li><strong>Time:</strong> 10:00 AM</li>
                     <li><strong>Guests Attending:</strong> {{data.Aman_Haldi}}</li>
                     <li><strong>Location:</strong> 1387 Needham Circle, Hatfield, PA 19440</li>
-                    <li><strong>Attire:</strong> Light, bright indian clothing. [edit this]</li>
+                    <li><strong>Suggested Attire:</strong> Light, bright Indian clothing</li>
                 </ul>
             </div>
             {% endif %}
@@ -193,9 +174,9 @@
                     <li><strong>Date:</strong> July 13th, 2024</li>
                     <li><strong>Time:</strong> 6:00 PM</li>
                     <li><strong>Guests Attending:</strong> {{data.Sangeet}}</li>
-                    <li><strong>Location:</strong> Holiday Inn</li>
+                    <li><strong>Location:</strong> Holiday Inn - Downtown Rochester</li>
                     <li><strong>Address:</strong> 70 State Street, Rochester, NY 14614</li>
-                    <li><strong>Attire:</strong> Light, bright indian clothing. [edit this]</li>
+                    <li><strong>Suggested Attire:</strong> Colorful Indian clothing</li>
                 </ul>
             </div>
             {% endif %}
@@ -204,12 +185,13 @@
                 <ul style="list-style: none;">
                     <li><strong>Event:</strong> Wedding</li>
                     <li><strong>Date:</strong> July 14th, 2024</li>
-                    <li><strong>Time:</strong> Barat starts at 9:45 AM</li>
+                    <li><strong>Time:</strong> Welcome Snacks at 9:00 AM, Baraat at 9:30 AM, Ceremony at 10:30 AM</li>
                     <li><strong>Guests Attending:</strong> {{data.Wedding}}</li>
                     <li><strong>Location:</strong> The Wintergarden</li>
                     <li><strong>Address:</strong> 1 Bausch and Lomb Pl, Rochester, NY 14604</li>
-                    <li><strong>Attire:</strong> Light, bright indian clothing. [edit this]</li>
-                    <li><strong>Parking:</strong> Across entrance [edit this]</li>
+                    <li><strong>Suggested Attire:</strong> Formal Indian attire, please avoid wearing white or black. If you don't own Indian clothing, black suits are okay</li>
+                    <li><strong>Transportation:</strong> Shuttle service will be provided from the hotel to the venue, and back</li>
+                    <li><strong>Parking:</strong> There are parking lots and free street parking nearby</li>
                 </ul>
             </div>
             {% endif %}
@@ -218,21 +200,21 @@
                 <ul style="list-style: none;">  
                     <li><strong>Event:</strong> Reception</li>
                     <li><strong>Date:</strong> July 14th, 2024</li>
-                    <li><strong>Time:</strong> 6:00 PM</li>
+                    <li><strong>Time:</strong> Cocktail Hour at 6:00 PM, Reception at 7:00 PM</li>
                     <li><strong>Guests Attending:</strong> {{data.Reception}}</li>
                     <li><strong>Location:</strong> The Wintergarden</li>
                     <li><strong>Address:</strong> 1 Bausch and Lomb Pl, Rochester, NY 14604</li>
-                    <li><strong>Attire:</strong> Light, bright indian clothing. [edit this]</li>
-                    <li><strong>Parking:</strong> Across entrance [edit this]</li>
-                </ul>
+                    <li><strong>Suggested Attire:</strong> Formal attire (Indian or Western)</li>
+                    <li><strong>Transportation:</strong> Shuttle service will be provided from the hotel to the venue, and back</li>
+                    <li><strong>Parking:</strong> There are parking lots and free street parking nearby</li></ul>
             </div>
             {% endif %}
-        <!-- </div> -->
         <p>We look forward to celebrating with you!</p>
         {% else %}
         <p>Thank you for confirming your attendance!</p>
-        <p>We'll miss having you with us on our special day, but we completely understand that plans and commitments vary. We're grateful for your warm wishes.</p>
+        <p>We'll miss having you with us on our special day, but we completely understand that plans and commitments vary. We're grateful for your warm wishes and blessings!</p>
         {% endif %}
+        <p>Visit our website at amanandshreya.com for more inforation.</p><br><br>
         <p>With love,<br>Shreya and Aman</p>
     </div>
 </body>

@@ -1,0 +1,19 @@
+{
+    "id": 1,
+    "title": "Mr.",
+    "name": "Test Test",
+    "category": "Groom",
+    "party_size": 3,
+    "over_21": 2,
+    "rsvp": 0,
+    "responded_rsvp": "Yes",
+    "email": "vyas95.aman@gmail.com",
+    "phone_number": "2342342345",
+    "events_invited": "Aman_Haldi Sangeet Wedding Reception",
+    "Shreya_Haldi": "",
+    "Aman_Haldi": "Test Test",
+    "Sangeet": "",
+    "Wedding": "Test Test, Badu, Chotu",
+    "Reception": "Test Test, Badu, Chotu",
+    "guest_names": "Badu, Chotu"
+}

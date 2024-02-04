@@ -27,7 +27,7 @@
     <body>
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a href="/" class="navbar-brand mx-auto mx-lg-0 title" style="color: #bd8677">
+                <a href="/" class="navbar-brand mx-auto mx-lg-0 title">
                     <span>Shreya & Aman</span>
                 </a>
                 <div class="collapse navbar-collapse">
@@ -46,7 +46,7 @@
                     <div class="col-lg-12 mx-auto">
                         <div class="rsvp-form-wrap">
                             <div class="section-title-wrap mb-5" style="margin-top: -2rem">
-                                <h2 class="section-title"> R S V P </h2>
+                                <h2 class="section-title" style="color: black; font-size: 42px;"> R S V P </h2>
                             </div>
 
                             <!-- Move event and form side by side -->
@@ -55,43 +55,46 @@
 
                                 {% if event == "Shreya_Haldi" %}
                                 <div class="col-lg-6 event-wrap">
-                                    <h3>Shreya's Haldi</h3>
+                                    <h3>Shreya's Grah Shanti & Haldi</h3>
                                     <h5>
                                     <br>
-                                    Friday, May 24, 2024<br>
-                                    12:00 PM - 2:00 PM<br>
+                                    <span style="font-size: 24px;">Friday, July 12, 2024</span><br>
+                                    10:00 AM<br>
                                     <br>
-                                    1387 Needham Circle<br>
-                                    Hatfield, PA 19440</h5>
-                                    <h6 style="font-family: 'Times New Roman'; padding-top: 20px">Attire: South Asain Casual - Kurtas for Men & Lengha or Saree for Women. If you do not own Indian attire, semi-formal attire is acceptable.</h6>
+                                    Patel Residence<br>
+                                    31 Sutton Point<br>
+                                    Pittsford, NY 14534</h5>
+                                    <h6 style="font-family: 'Times New Roman'; padding-top: 20px">Suggested Attire: <br><span style="font-weight: 400;">South Asain Casual <br>Men - Kurtha <br>Women - Silk Sari or Punjabi</h6></span>
                                 </div>
                                 {% endif %}
 
                                 {% if event == "Aman_Haldi" %}
                                 <div class="col-lg-6 event-wrap">
-                                    <h3>Aman's Haldi</h3>
+                                    <h3>Aman's Grah Shanti & Haldi</h3>
                                     <h5>
                                     <br>
-                                    Friday, May 24, 2024<br>
-                                    3:00 PM - 5:00 PM<br>
+                                    <span style="font-size: 24px;">Thursday, July 11, 2024</span><br>
+                                    10:00 AM<br>
                                     <br>
+                                    Vyas Residence<br>
                                     1387 Needham Circle<br>
                                     Hatfield, PA 19440</h5>
-                                    <h6 style="font-family: 'Times New Roman'; padding-top: 20px">Attire: South Asain Casual - Kurtas for Men & Lengha or Saree for Women. If you do not own Indian attire, semi-formal attire is acceptable.</h6>
+                                    <h6 style="font-family: 'Times New Roman'; padding-top: 20px">Suggested Attire: <br><span style="font-weight: 400;">South Asain Casual</span></h6>
                                 </div>
                                 {% endif %}
 
                                 {% if event == "Sangeet" %}
                                 <div class="col-lg-6 event-wrap">
-                                    <h3>{{event}}</h3>
+                                    <h3>{{event}}/Garba</h3>
                                     <h5>
                                     <br>
-                                    Friday, May 24, 2024<br>
-                                    3:00 PM - 5:00 PM<br>
+                                    <span style="font-size: 24px;">Saturday, July 13, 2024</span><br>
+                                    6:00 PM - 10:00 PM<br>
                                     <br>
-                                    1387 Needham Circle<br>
-                                    Hatfield, PA 19440</h5>
-                                    <h6 style="font-family: 'Times New Roman'; padding-top: 20px">Attire: South Asain Casual - Kurtas for Men & Lengha or Saree for Women. If you do not own Indian attire, semi-formal attire is acceptable.</h6>
+                                    Holiday Inn - Downtown Rochester<br>
+                                    70 State Street<br>
+                                    Rochester, NY 14614</h5>
+                                    <h6 style="font-family: 'Times New Roman'; padding-top: 20px">Attire: South Asain Casual <span style="font-weight: 400;"><br>Men - Kurtha <br>Women - Lengha or Sari <br><br></span>If you do not own Indian attire, semi-formal attire is acceptable.</h6>
                                 </div>
                                 {% endif %}
 
@@ -100,12 +103,23 @@
                                     <h3>{{event}}</h3>
                                     <h5>
                                     <br>
-                                    Sunday, May 26, 2024<br>
-                                    9:00 AM - 12:00 AM<br>
+                                    <span style="font-size: 24px;">Sunday, July 14, 2024</span><br>
                                     <br>
+                                    Welcome Snacks: 9:00 AM<br>
+                                    Baraat: 9:30 AM Sharp!<br>
+                                    Ceremony: 10:30 AM<br>
+                                    Lunch to follow<br>
+                                    <br>
+                                    The Wintergarden<br>
                                     1 Bausch and Lomb Pl<br>
-                    Rochester, NY 14604</h5>
-                                    <h6 style="font-family: 'Times New Roman'; padding-top: 20px">Attire: South Asain Casual - Kurtas for Men & Lengha or Saree for Women. If you do not own Indian attire, semi-formal attire is acceptable.</h6>
+                                    Rochester, NY 14604</h5>
+                                    <h6 style="font-family: 'Times New Roman'; padding-top: 20px">
+                                        Suggested Attire: <br>
+                                        <span style="font-weight: 400;">South Asain Formal<br>
+                                        Men - Sherwani or Kurtha <br>
+                                        Women - Lengha or Sari <br><br></span>
+                                        Please avoid wearing white or black <br>
+                                        If you do not own Indian attire, formal attire is acceptable (black suits are okay!)</h6>
                                 </div>
                                 {% endif %}
 
@@ -114,12 +128,16 @@
                                     <h3>{{event}}</h3>
                                     <h5>
                                     <br>
-                                    Sunday, May 26, 2024<br>
-                                    6:00 PM - 12:00 AM<br>
+                                    <span style="font-size: 24px;">Sunday, July 14, 2024</span><br><br>
+                                    Cocktail Hour: 6:00 PM<br>
+                                    Reception: 7:00 PM<br>
                                     <br>
+                                    The Wintergarden<br>
                                     1 Bausch and Lomb Pl<br>
-                    Rochester, NY 14604</h5>
-                                    <h6 style="font-family: 'Times New Roman'; padding-top: 20px">Attire: South Asain Casual - Kurtas for Men & Lengha or Saree for Women. If you do not own Indian attire, semi-formal attire is acceptable.</h6>
+                                    Rochester, NY 14604</h5>
+                                    <h6 style="font-family: 'Times New Roman'; padding-top: 20px">
+                                        Suggested Attire: <br>
+                                        <span style="font-weight: 400;">Formal Attire (Indian or Western)<br></span>
                                 </div>
                                 {% endif %}
                                 
