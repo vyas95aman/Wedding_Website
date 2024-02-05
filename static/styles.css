@@ -425,7 +425,7 @@ button:hover {
 }
 
 .smartphone-guide{
-    width: 100%;
+    width: 95%;
     margin-top: 105px;
 }
 
@@ -462,6 +462,6 @@ button:hover {
     } 
 
     .smartphone-guide{
-        width: 95%;
+        width: 100%;
     }
 }
