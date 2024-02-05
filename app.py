@@ -84,39 +84,48 @@ def landing():
 
 @app.route("/check_names", methods=["POST"])
 def check_names():
+    print("############################# CHECK NAMES #################################")
     data = request.get_json()
     first_name = data.get("firstName")
     last_name = data.get("lastName")
     name = (first_name + " " + last_name).title()
+    print(f"######################### Name used in /check_names: {name}")
+    # id = db.execute("SELECT id FROM guestlist WHERE name=?", name)
     id = db.execute("SELECT id FROM guestlist WHERE name= :name OR guest_names LIKE :search_text", name=name, search_text=f"%{name}%")
     print("######################### ID ::", id)
-    print(len(id))
+    print(f"######################### length of id: {len(id)}")
     if id:
         if len(id) == 1:
-            print("One : Length of id is:: ", len(id))
+            # print("Length of id is:: ", len(id))
             response = {"valid": id}
         else:
-            print("Longer : Length of id is:: ", len(id))
+            # print("Longer : Length of id is:: ", len(id))
             # return prompt to pick from id/family members
             response = {"valid": False}
     else:
-        print("No response for id")
+        print("################## No response for id")
         response = {"valid": False}
-    print("Response to javascript name check: ", response)
+    print("################### Response to javascript name check: ", response)
     return jsonify(response)
 
 @app.route("/", methods=["GET", "POST"])
 @pass_required
 def index():
     if request.method == "POST":
+        print("############################# / rsvp main page / #################################")
         name = (request.form.get("first name").strip() + " " + request.form.get("last name").strip()).title()
-        resp = db.execute("SELECT id FROM guestlist WHERE name=? OR guest_names=?", name, name)[0]
+        print(f"######################### Route: '/' name returned from front-end: {name}")
+        # resp = db.execute("SELECT id FROM guestlist WHERE name=?", name)[0]
+        resp = db.execute("SELECT id FROM guestlist WHERE name= :name OR guest_names LIKE :search_text", name=name, search_text=f"%{name}%")[0]
+        print("################## id returned: ", resp)
         if resp:
             id = resp['id']
             event = db.execute("SELECT events_invited FROM guestlist WHERE id=?", id)[0]['events_invited']
             event = event.split(" ")[0]
+            print("################## direting to rsvp for event: ", event)
             hash = random.getrandbits(128)
-            return redirect(f"/rsvp/{hash}{id}017/{event}")
+            print("################## id sent to rsvp page: ", id)
+            return redirect(f"/rsvp/{hash}/{id}/017/{event}")
         else:
             flash("An error occured. Please try again.", "warning")
             return redirect('/')
@@ -271,9 +280,10 @@ def editguest(id):
         guest_num = len(guests)
         return render_template("editguest.html", person=person, guests=guests, guest_num=guest_num)
 
-@app.route("/rsvp/<hash><int:id>017/<event>", methods=["GET", "POST"])
+@app.route("/rsvp/<hash>/<int:id>/017/<event>", methods=["GET", "POST"])
 @pass_required
 def rsvp(hash, id, event):
+    print("################## id received by rsvp/hash/id017/event: ", id)
     if request.method == "POST":
         db.execute(f"UPDATE guestlist SET {event}='' WHERE id=?", id)
 
@@ -307,8 +317,12 @@ def rsvp(hash, id, event):
         return redirect(f"/rsvp/{hash}{id}017/{event}")
 
     else:
+        print("############################# rsvp get page #################################")
+        print("################## id used: ", id)
         person = db.execute("SELECT * FROM guestlist WHERE id = ?", id)[0]
+        print("################## person data: ", person)
         guests = person['guest_names'].split(", ")
+        print("################## guests: ", guests)
         accepted = person[event].split(", ")
         return render_template("rsvp.html", person=person, guests=guests, event=event, accepted=accepted, hash=hash, id=id)
     
