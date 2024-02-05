@@ -4,9 +4,7 @@ from flask_mail import Message, Mail
 from flask_session import Session
 from functools import wraps
 import sqlite3
-import time
 import random 
-import boto3
 from boto3.dynamodb.conditions import Key, Attr
 
 # Configure application
