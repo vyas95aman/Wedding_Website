@@ -5,7 +5,6 @@ from flask_session import Session
 from functools import wraps
 import sqlite3
 import random 
-from boto3.dynamodb.conditions import Key, Attr
 
 # Configure application
 app = Flask(__name__)
