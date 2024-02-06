@@ -88,7 +88,10 @@ def check_names():
     name = (first_name + " " + last_name).title()
     print(f"######################### Name used in /check_names: {name}")
     # id = db.execute("SELECT id FROM guestlist WHERE name=?", name)
-    id = db.execute("SELECT id FROM guestlist WHERE name= :name OR guest_names LIKE :search_text", name=name, search_text=f"%{name}%")
+    # id = db.execute("SELECT id FROM guestlist WHERE name= :name OR guest_names LIKE :search_text", name=name, search_text=f"%{name}%")
+    id = db.execute("SELECT id FROM guestlist WHERE name = :name OR (', ' || guest_names || ', ') LIKE :search_text",
+                 name=name, search_text=f"%, {name},%")
+
     print("######################### ID ::", id)
     print(f"######################### length of id: {len(id)}")
     if id:
@@ -113,7 +116,9 @@ def index():
         name = (request.form.get("first name").strip() + " " + request.form.get("last name").strip()).title()
         print(f"######################### Route: '/' name returned from front-end: {name}")
         # resp = db.execute("SELECT id FROM guestlist WHERE name=?", name)[0]
-        resp = db.execute("SELECT id FROM guestlist WHERE name= :name OR guest_names LIKE :search_text", name=name, search_text=f"%{name}%")[0]
+        # resp = db.execute("SELECT id FROM guestlist WHERE name= :name OR guest_names LIKE :search_text", name=name, search_text=f"%{name}%")[0]
+        resp = id = db.execute("SELECT id FROM guestlist WHERE name = :name OR (', ' || guest_names || ', ') LIKE :search_text",
+                 name=name, search_text=f"%, {name},%")[0]
         print("################## id returned: ", resp)
         if resp:
             id = resp['id']
