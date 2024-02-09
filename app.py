@@ -81,19 +81,19 @@ def landing():
 
 @app.route("/check_names", methods=["POST"])
 def check_names():
-    print("############################# CHECK NAMES #################################")
+    # print("############################# CHECK NAMES #################################")
     data = request.get_json()
     first_name = data.get("firstName")
     last_name = data.get("lastName")
     name = (first_name + " " + last_name).title()
-    print(f"######################### Name used in /check_names: {name}")
+    # print(f"######################### Name used in /check_names: {name}")
     # id = db.execute("SELECT id FROM guestlist WHERE name=?", name)
     # id = db.execute("SELECT id FROM guestlist WHERE name= :name OR guest_names LIKE :search_text", name=name, search_text=f"%{name}%")
     id = db.execute("SELECT id FROM guestlist WHERE name = :name OR (', ' || guest_names || ', ') LIKE :search_text",
                  name=name, search_text=f"%, {name},%")
 
-    print("######################### ID ::", id)
-    print(f"######################### length of id: {len(id)}")
+    # print("######################### ID ::", id)
+    # print(f"######################### length of id: {len(id)}")
     if id:
         if len(id) == 1:
             # print("Length of id is:: ", len(id))
@@ -103,30 +103,30 @@ def check_names():
             # return prompt to pick from id/family members
             response = {"valid": False}
     else:
-        print("################## No response for id")
+        # print("################## No response for id")
         response = {"valid": False}
-    print("################### Response to javascript name check: ", response)
+    # print("################### Response to javascript name check: ", response)
     return jsonify(response)
 
 @app.route("/", methods=["GET", "POST"])
 @pass_required
 def index():
     if request.method == "POST":
-        print("############################# / rsvp main page / #################################")
+        # print("############################# / rsvp main page / #################################")
         name = (request.form.get("first name").strip() + " " + request.form.get("last name").strip()).title()
-        print(f"######################### Route: '/' name returned from front-end: {name}")
+        # print(f"######################### Route: '/' name returned from front-end: {name}")
         # resp = db.execute("SELECT id FROM guestlist WHERE name=?", name)[0]
         # resp = db.execute("SELECT id FROM guestlist WHERE name= :name OR guest_names LIKE :search_text", name=name, search_text=f"%{name}%")[0]
-        resp = id = db.execute("SELECT id FROM guestlist WHERE name = :name OR (', ' || guest_names || ', ') LIKE :search_text",
+        resp = db.execute("SELECT id FROM guestlist WHERE name = :name OR (', ' || guest_names || ', ') LIKE :search_text",
                  name=name, search_text=f"%, {name},%")[0]
-        print("################## id returned: ", resp)
+        # print("################## id returned: ", resp)
         if resp:
             id = resp['id']
             event = db.execute("SELECT events_invited FROM guestlist WHERE id=?", id)[0]['events_invited']
             event = event.split(" ")[0]
-            print("################## direting to rsvp for event: ", event)
+            # print("################## direting to rsvp for event: ", event)
             hash = random.getrandbits(128)
-            print("################## id sent to rsvp page: ", id)
+            # print("################## id sent to rsvp page: ", id)
             return redirect(f"/rsvp/{hash}/{id}/017/{event}")
         else:
             flash("An error occured. Please try again.", "warning")
@@ -285,10 +285,11 @@ def editguest(id):
 @app.route("/rsvp/<hash>/<int:id>/017/<event>", methods=["GET", "POST"])
 @pass_required
 def rsvp(hash, id, event):
-    print("################## id received by rsvp/hash/id017/event: ", id)
+    # print("################## id received by rsvp/hash/id/017/event: ", id)
     if request.method == "POST":
         db.execute(f"UPDATE guestlist SET {event}='' WHERE id=?", id)
-
+        events_invited = db.execute(f"SELECT events_invited FROM guestlist where id = {id}")[0]['events_invited']
+        # print("##################### EVENTS INVITED: ", events_invited)
         name = request.form.get("name")
         email = request.form.get("email")
         guests = [i for i in request.form.getlist("guest name") if i]
@@ -302,11 +303,13 @@ def rsvp(hash, id, event):
         attending_number = len(attending)
         attending = ', '.join(attending)
         db.execute(f"UPDATE guestlist SET name=?, email=?, guest_names=?, {event}=?, {event}_Number=? WHERE id=?", name, email, guests, attending, attending_number, id)
-        if event == "Shreya_Haldi" or event == "Aman_Haldi":
+        if event == "Shreya_Haldi" and "Sangeet" in events_invited:
             event = "Sangeet"
-        elif event == "Sangeet":
+        elif event == "Aman_Haldi" and "Sangeet" in events_invited:
+            event = "Sangeet"
+        elif event == "Sangeet" and "Wedding" in events_invited:
             event = "Wedding"
-        elif event == "Wedding":
+        elif event == "Wedding" and "Reception" in events_invited:
             event = "Reception"
         else:
             db.execute("UPDATE guestlist SET responded_rsvp=? WHERE id=?", "Yes", id)
@@ -315,24 +318,29 @@ def rsvp(hash, id, event):
             if person["Shreya_Haldi"] == "" and person["Aman_Haldi"] == "" and person["Sangeet"] == "" and person["Wedding"] == "" and person["Reception"] == "":
                 person['decline'] = True
             send_email(subject="Shreya & Aman's Wedding RSVP Confirmation", template='rsvp_confirmation.html', recipients=[email], sender='amanandshreya2024.com', data=person)
-            return (redirect(f"/thankyou/{hash}{id}"))
-        return redirect(f"/rsvp/{hash}{id}017/{event}")
+            return (redirect(f"/thankyou/{hash}/{id}"))
+        return redirect(f"/rsvp/{hash}/{id}/017/{event}")
 
     else:
-        print("############################# rsvp get page #################################")
-        print("################## id used: ", id)
+        # print("############################# rsvp get page #################################")
+        # print("################## id used: ", id)
         person = db.execute("SELECT * FROM guestlist WHERE id = ?", id)[0]
-        print("################## person data: ", person)
+        # print("################## person data: ", person)
         guests = person['guest_names'].split(", ")
-        print("################## guests: ", guests)
+        # print("################## guests: ", guests)
         accepted = person[event].split(", ")
         return render_template("rsvp.html", person=person, guests=guests, event=event, accepted=accepted, hash=hash, id=id)
     
-@app.route("/thankyou/<hash><int:id>", methods=["GET"])
+@app.route("/thankyou/<hash>/<int:id>", methods=["GET"])
 @pass_required
 def thankyou(hash, id):
     person =  db.execute("SELECT * FROM guestlist WHERE id=?", id)[0]
+    # print("ID USED::: ", id)
     person['decline'] = False
+    # print(person)
+    # print(f"Attendance: Shreya Haldi: {person['Shreya_Haldi']}, Aman Haldi: {person['Aman_Haldi']}, Sangeet: {person['Sangeet']}, Wedding: {person['Wedding']}, Reception: {person['Reception']}")
+    
+
     if person["Shreya_Haldi"] == "" and person["Aman_Haldi"] == "" and person["Sangeet"] == "" and person["Wedding"] == "" and person["Reception"] == "":
         person['decline'] = True
     return render_template("thankyou.html", person=person)
