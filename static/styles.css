@@ -371,7 +371,7 @@ body, html {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background-image: url('/static/images/Pic-22.jpg');
+    background-image: url('/static/images/pic-22.png');
     background-size: cover;
     background-position: center;
 }
